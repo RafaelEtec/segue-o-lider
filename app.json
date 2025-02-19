@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "react_native_segueolider_aux",
-    "slug": "react_native_segueolider_aux",
+    "name": "Segue o Líder",
+    "slug": "segueolider",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "segueolider",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
