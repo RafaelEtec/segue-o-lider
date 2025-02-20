@@ -2,7 +2,8 @@ import {StyleSheet, Text, View} from 'react-native'
 import React, {useEffect} from 'react'
 import {SplashScreen, Stack} from "expo-router";
 import {useFonts} from "expo-font";
-import "../global.css";
+import "../global.css"
+import * as NavigationBar from "expo-navigation-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,6 +31,10 @@ const RootLayout = () => {
     if (!fontsLoaded && !error) {
         return null;
     }
+
+    NavigationBar.setPositionAsync("absolute");
+    NavigationBar.setBackgroundColorAsync("#191d31");
+    NavigationBar.setButtonStyleAsync("light");
 
     return (
         <Stack>
