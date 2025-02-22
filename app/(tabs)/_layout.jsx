@@ -34,7 +34,7 @@ const TabsLayout = () => {
                     tabBarInactiveTintColor: '#8C8E98',
                     tabBarStyle: {
                         backgroundColor: '#191D31',
-                        borderTopWidth: 2,
+                        borderTopWidth: 1,
                         borderTopColor: '#191D31',
                         height: '60',
                     }
@@ -71,13 +71,13 @@ const TabsLayout = () => {
                     }}
                 />
                 <Tabs.Screen
-                    name="profile"
+                    name="leaderboard"
                     options={{
-                        title: 'Perfil',
+                        title: 'Líderes',
                         headerShown: false,
                         tabBarIcon: ({color, focused}) => (
                             <TabIcon
-                                icon={icons.person}
+                                icon={icons.star}
                                 color={color}
                                 name=""
                                 focused={focused}
@@ -86,13 +86,13 @@ const TabsLayout = () => {
                     }}
                 />
                 <Tabs.Screen
-                    name="leaderboard"
+                    name="profile"
                     options={{
-                        title: 'Líderes',
+                        title: 'Perfil',
                         headerShown: false,
                         tabBarIcon: ({color, focused}) => (
                             <TabIcon
-                                icon={icons.star}
+                                icon={icons.person}
                                 color={color}
                                 name=""
                                 focused={focused}
