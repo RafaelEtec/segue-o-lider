@@ -1,10 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native'
 import React, {useEffect} from 'react'
 import {SplashScreen, Stack} from "expo-router";
 import {useFonts} from "expo-font";
 import "../global.css"
 import * as NavigationBar from "expo-navigation-bar";
 import GlobalProvider from '../context/GlobalProvider'
+import {StatusBar} from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,6 +29,10 @@ const RootLayout = () => {
         }
     }, [fontsLoaded], error);
 
+    if (!fontsLoaded) {
+        return null;
+    }
+
     if (!fontsLoaded && !error) {
         return null;
     }
@@ -48,5 +52,3 @@ const RootLayout = () => {
     )
 }
 export default RootLayout
-
-const styles = StyleSheet.create({})

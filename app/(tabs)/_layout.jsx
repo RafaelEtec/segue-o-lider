@@ -2,6 +2,8 @@ import {View, Text, Image} from 'react-native';
 import React from 'react';
 import {Tabs, Redirect} from 'expo-router';
 import icons from '@/constants/icons';
+import {useGlobalContext} from "../../context/GlobalProvider";
+import {StatusBar} from "expo-status-bar";
 
 const TabIcon = ({icon, color, focused}) => {
     return (
@@ -24,17 +26,20 @@ const TabIcon = ({icon, color, focused}) => {
 }
 
 const TabsLayout = () => {
+    const {loading, isLoggedIn} = useGlobalContext();
+
+    if (!loading && !isLoggedIn) return <Redirect href="/sign-in" />;
+
     return (
         <>
             <Tabs
                 screenOptions={{
-                    tabBarAllowFontScaling: false,
                     tabBarShowLabel: true,
                     tabBarActiveTintColor: '#FFBA26',
                     tabBarInactiveTintColor: '#8C8E98',
                     tabBarStyle: {
                         backgroundColor: '#191D31',
-                        borderTopWidth: 1,
+                        borderTopWidth: 0,
                         borderTopColor: '#191D31',
                         height: '60',
                     }
@@ -56,13 +61,13 @@ const TabsLayout = () => {
                     }}
                 />
                 <Tabs.Screen
-                    name="games"
+                    name="create"
                     options={{
-                        title: 'Jogos',
+                        title: 'Criar',
                         headerShown: false,
                         tabBarIcon: ({color, focused}) => (
                             <TabIcon
-                                icon={icons.run}
+                                icon={icons.plus}
                                 color={color}
                                 name=""
                                 focused={focused}

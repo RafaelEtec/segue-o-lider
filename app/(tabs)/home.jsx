@@ -1,21 +1,34 @@
-import {View, Text, FlatList, Image} from 'react-native'
-import React from 'react'
+import {View, Text, FlatList, Image, RefreshControl} from 'react-native'
+import React, {useState} from 'react'
 import {SafeAreaView} from "react-native-safe-area-context";
 import images from '@/constants/images';
 import SearchInput from "../../components/SearchInput";
 import MyGames from "../../components/MyGames";
 import EmptyState from "../../components/EmptyState";
+import {useGlobalContext} from "../../context/GlobalProvider";
+import useAppwrite from "../../lib/useAppwrite";
+import {getMyGames} from "../../lib/appwrite";
 
 const Home = () => {
+    const [refreshing, setRefreshing] = useState(false);
+
+    const {user, setUser, setIsLoggedIn} = useGlobalContext();
+    const {data: myGames} = useAppwrite(() => getMyGames(user.$id));
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+
+        setRefreshing(false);
+    }
+
     return (
         <View>
             <SafeAreaView className="bg-black-300 h-full">
                 <FlatList
-                    //data={[{id: 1}, {id: 2}, {id: 3}]}
-                    data={[]}
+                    data={myGames}
                     keyExtractor={(item) => item.$id}
                     renderItem={({ item }) => (
-                        <Text className="text-3xl text-accent-200">{item.id}</Text>
+                        <Text className="text-3xl text-accent-200">{item.title}</Text>
                     )}
                     ListHeaderComponent={() => (
                         <View className="my-6 px-4 space-y-6">
@@ -25,7 +38,7 @@ const Home = () => {
                                         Olá,
                                     </Text>
                                     <Text className="text-2xl font-psemibold text-accent-200">
-                                        Rafael Goulart
+                                        Usuário
                                     </Text>
                                 </View>
 
@@ -53,6 +66,7 @@ const Home = () => {
                             subtitle="Você não está participando de nenhum jogo ainda"
                         />
                     )}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 />
             </SafeAreaView>
         </View>

@@ -18,6 +18,10 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#191D31",
         "package": "com.goulart.segueolider"
+      },
+      "androidStatusBar": {
+        "backgroundColor": "#191D31",
+        "translucent": false
       }
     },
     "web": {

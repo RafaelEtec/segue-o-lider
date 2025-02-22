@@ -33,6 +33,7 @@ import location from "@/assets/icons/location.png";
 import edit from "@/assets/icons/edit.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
+import plus from "../assets/icons/plus.png";
 
 export default {
   google,
@@ -70,4 +71,5 @@ export default {
   edit,
   eyeHide,
   eye,
+  plus
 };
