@@ -21,7 +21,7 @@ const SignIn = () => {
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <ScrollView>
-                <View className="w-full justify-center h-full px-4 my-6">
+                <View className="w-full justify-center min-h-[85vh] px-4 my-6">
                     <Image
                         source={images.logo_bg_dark}
                         className="w-[140px] h-[140px]"
@@ -39,7 +39,7 @@ const SignIn = () => {
                         keyboardType="email-adrress"
                     />
                     <FormField
-                        title="Password"
+                        title="Senha"
                         value={form.password}
                         handleChangeText={(e) => setForm({
                             ...form,
@@ -48,7 +48,7 @@ const SignIn = () => {
                     />
 
                     <CustomButton
-                        title="Sign in"
+                        title="Entrar"
                         handlePress={submit}
                         containerStyles="mt-7"
                         isLoading={isSubmitting}

@@ -5,7 +5,7 @@ import CustomButton from "../components/CustomButton";
 import {StatusBar} from "expo-status-bar";
 import {Redirect, router} from 'expo-router';
 
-
+// com.goulart.segueolider
 export default function App() {
     return (
         <SafeAreaView className="bg-black-300 h-full">
