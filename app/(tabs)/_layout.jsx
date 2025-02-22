@@ -3,7 +3,7 @@ import React from 'react';
 import {Tabs, Redirect} from 'expo-router';
 import icons from '@/constants/icons';
 
-const TabIcon = ({icon, color, name, focused}) => {
+const TabIcon = ({icon, color, focused}) => {
     return (
         <View className="items-center justify-center gap-1">
             <Image
@@ -17,7 +17,6 @@ const TabIcon = ({icon, color, name, focused}) => {
                 className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}
                 style={{color: color}}
             >
-                {name}
             </Text>
         </View>
 
@@ -30,7 +29,7 @@ const TabsLayout = () => {
             <Tabs
                 screenOptions={{
                     tabBarAllowFontScaling: false,
-                    tabBarShowLabel: false,
+                    tabBarShowLabel: true,
                     tabBarActiveTintColor: '#FFBA26',
                     tabBarInactiveTintColor: '#8C8E98',
                     tabBarStyle: {
@@ -44,13 +43,13 @@ const TabsLayout = () => {
                 <Tabs.Screen
                     name="home"
                     options={{
-                        title: 'Home',
+                        title: 'Menu',
                         headerShown: false,
                         tabBarIcon: ({color, focused}) => (
                             <TabIcon
                                 icon={icons.home}
                                 color={color}
-                                name="Home"
+                                name=""
                                 focused={focused}
                             />
                         )
@@ -59,13 +58,13 @@ const TabsLayout = () => {
                 <Tabs.Screen
                     name="games"
                     options={{
-                        title: 'Games',
+                        title: 'Jogos',
                         headerShown: false,
                         tabBarIcon: ({color, focused}) => (
                             <TabIcon
                                 icon={icons.run}
                                 color={color}
-                                name="Games"
+                                name=""
                                 focused={focused}
                             />
                         )
@@ -74,13 +73,13 @@ const TabsLayout = () => {
                 <Tabs.Screen
                     name="profile"
                     options={{
-                        title: 'Profile',
+                        title: 'Perfil',
                         headerShown: false,
                         tabBarIcon: ({color, focused}) => (
                             <TabIcon
                                 icon={icons.person}
                                 color={color}
-                                name="Profile"
+                                name=""
                                 focused={focused}
                             />
                         )
@@ -89,13 +88,13 @@ const TabsLayout = () => {
                 <Tabs.Screen
                     name="leaderboard"
                     options={{
-                        title: 'Leaders',
+                        title: 'Líderes',
                         headerShown: false,
                         tabBarIcon: ({color, focused}) => (
                             <TabIcon
                                 icon={icons.star}
                                 color={color}
-                                name="Leaders"
+                                name=""
                                 focused={focused}
                             />
                         )

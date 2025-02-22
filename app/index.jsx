@@ -4,9 +4,14 @@ import images from '@/constants/images';
 import CustomButton from "../components/CustomButton";
 import {StatusBar} from "expo-status-bar";
 import {Redirect, router} from 'expo-router';
+import {useGlobalContext} from "../context/GlobalProvider";
 
-// com.goulart.segueolider
 export default function App() {
+
+    const {isLoading, isLoggedIn} = useGlobalContext();
+
+    if (!isLoading && isLoggedIn) return <Redirect href="/home" />;
+
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <ScrollView contentContainerStyle={{height:'100%'}}>

@@ -5,6 +5,15 @@ const Home = () => {
     return (
         <View>
             <Text>Home</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
+            <Text>sgaojgsanhiusgaigsa</Text>
         </View>
     )
 }
