@@ -3,7 +3,6 @@ import React from 'react';
 import {Tabs, Redirect} from 'expo-router';
 import icons from '@/constants/icons';
 import {useGlobalContext} from "../../context/GlobalProvider";
-import {StatusBar} from "expo-status-bar";
 
 const TabIcon = ({icon, color, focused}) => {
     return (

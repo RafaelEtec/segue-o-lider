@@ -1,20 +1,21 @@
 import {View, Text, FlatList, Image, RefreshControl} from 'react-native'
 import React, {useState} from 'react'
-import {SafeAreaView} from "react-native-safe-area-context";
-import images from '@/constants/images';
+import {useLocalSearchParams} from "expo-router";
+import useAppwrite from "../../lib/useAppwrite";
+import {getGameById, getParticipantsByGameId} from "../../lib/appwrite";
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
-import {useGlobalContext} from "../../context/GlobalProvider";
-import useAppwrite from "../../lib/useAppwrite";
-import {getMyGames} from "../../lib/appwrite";
-import GameCard from "../../components/GameCard";
+import {SafeAreaView} from "react-native-safe-area-context";
+import GameCardById from "../../components/GameCardById";
+import images from '@/constants/images';
 
-const Home = () => {
+const Game = () => {
+    const {gameId} = useLocalSearchParams();
+
+    const { data: game } = useAppwrite(() => getGameById(gameId));
+    const { data: participants } = useAppwrite(() => getParticipantsByGameId(gameId));
+
     const [refreshing, setRefreshing] = useState(false);
-
-    const {user, setUser, setIsLoggedIn} = useGlobalContext();
-    const {data: myGames} = useAppwrite(() => getMyGames(user.$id));
-
     const onRefresh = async () => {
         setRefreshing(true);
 
@@ -24,20 +25,17 @@ const Home = () => {
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
-                data={myGames}
+                data={participants}
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
-                    <GameCard game={item} />
+                    <GameCardById participants={item} />
                 )}
                 ListHeaderComponent={() => (
                     <View className="flex my-6 px-4 space-y-6">
                         <View className="flex justify-between items-space-between flex-row mb-6">
                             <View>
-                                <Text className="font-pmedium text-sm text-gray-100">
-                                    Olá,
-                                </Text>
                                 <Text className="text-2xl font-psemibold text-accent-200">
-                                    {user.username}
+                                    {gameId}
                                 </Text>
                             </View>
 
@@ -49,20 +47,12 @@ const Home = () => {
                                 />
                             </View>
                         </View>
-
-                        <SearchInput />
                     </View>
                 )}
-                ListEmptyComponent={() => (
-                    <EmptyState
-                        title="Nenhum jogo encontrado"
-                        subtitle="Você não está participando de nenhum jogo ainda"
-                    />
-                )}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
+                }
             />
         </SafeAreaView>
-    );
-};
-export default Home
+    )
+}
+export default Game
