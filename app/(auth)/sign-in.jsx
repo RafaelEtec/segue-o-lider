@@ -28,6 +28,7 @@ const SignIn = () => {
             setUser(result);
             setIsLoggedIn(true);
 
+            Alert.alert("Sucesso", "Seja bem vindo!")
             router.replace('/home');
         } catch (error) {
             Alert.alert('Opa!', error.message);
