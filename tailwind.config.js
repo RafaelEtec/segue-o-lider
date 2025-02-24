@@ -37,6 +37,11 @@ module.exports = {
                 250: '#2d3149',
                 300: '#191D31',
             },
+            medal: {
+                gold: '#D4AF37',
+                silver: '#C0C0C0',
+                bronze: '#9F7A34',
+            },
             gray: {
                 100: '#CDCDE0',
             },

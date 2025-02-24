@@ -31,9 +31,12 @@ import swim from "@/assets/icons/swim.png";
 import wifi from "@/assets/icons/wifi.png";
 import location from "@/assets/icons/location.png";
 import edit from "@/assets/icons/edit.png";
-import eyeHide from "../assets/icons/eye-hide.png";
-import eye from "../assets/icons/eye.png";
-import plus from "../assets/icons/plus.png";
+import eyeHide from "@/assets/icons/eye-hide.png";
+import eye from "@/assets/icons/eye.png";
+import plus from "@/assets/icons/plus.png";
+import add from "@/assets/icons/add.png";
+import minus from "@/assets/icons/minus.png";
+import crown from "@/assets/icons/crown.png";
 
 export default {
   google,
@@ -71,5 +74,8 @@ export default {
   edit,
   eyeHide,
   eye,
-  plus
+  plus,
+  add,
+  minus,
+  crown,
 };
