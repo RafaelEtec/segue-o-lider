@@ -10,14 +10,13 @@ import {getMyGames} from "../../lib/appwrite";
 import GameCard from "../../components/GameCard";
 
 const Home = () => {
-    const [refreshing, setRefreshing] = useState(false);
-
     const {user, setUser, setIsLoggedIn} = useGlobalContext();
-    const {data: myGames} = useAppwrite(() => getMyGames(user.$id));
+    const {data: myGames, refetch} = useAppwrite(getMyGames(user.$id));
 
+    const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
-
+        await refetch();
         setRefreshing(false);
     }
 
@@ -51,6 +50,12 @@ const Home = () => {
                         </View>
 
                         <SearchInput />
+
+                        <View className="w-full flex-1 pt-5">
+                            <Text className="text-gray-100 text-lg font-pregular">
+                                Suas participações
+                            </Text>
+                        </View>
                     </View>
                 )}
                 ListEmptyComponent={() => (
@@ -59,8 +64,9 @@ const Home = () => {
                         subtitle="Você não está participando de nenhum jogo ainda"
                     />
                 )}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
             />
         </SafeAreaView>
     );
