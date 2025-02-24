@@ -13,7 +13,6 @@ const Game = () => {
 
     const { data: game } = useAppwrite(() => getGameById(gameId));
     const { data: participants } = useAppwrite(() => getParticipantsByGameId(gameId));
-    let c = 0;
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
@@ -29,7 +28,7 @@ const Game = () => {
                 renderItem={ ({ item }) => (
                     <GameCardById
                         participants={item}
-                        place={c++}
+                        partId={item.$id}
                     />
                 )}
                 ListHeaderComponent={() => (
