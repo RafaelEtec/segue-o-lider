@@ -1,7 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
 import {Tabs, Redirect} from 'expo-router';
-import icons from '@/constants/icons';
+import icons from '../../constants/icons';
 import {useGlobalContext} from "../../context/GlobalProvider";
 
 const TabIcon = ({icon, color, focused}) => {
@@ -38,9 +38,9 @@ const TabsLayout = () => {
                     tabBarInactiveTintColor: '#8C8E98',
                     tabBarStyle: {
                         backgroundColor: '#191D31',
-                        borderTopWidth: 0,
-                        borderTopColor: '#191D31',
-                        height: '60',
+                        borderTopWidth: 1,
+                        borderColor: '#FFBA26',
+                        height: 60,
                     }
                 }}
             >

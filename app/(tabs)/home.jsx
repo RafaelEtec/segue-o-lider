@@ -1,30 +1,26 @@
 import {View, Text, FlatList, Image, RefreshControl} from 'react-native'
 import React, {useState} from 'react'
 import {SafeAreaView} from "react-native-safe-area-context";
-import images from '@/constants/images';
+import images from '../../constants/images';
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
 import {useGlobalContext} from "../../context/GlobalProvider";
-import useAppwrite from "../../lib/useAppwrite";
-import {getMyGames} from "../../lib/appwrite";
 import GameCard from "../../components/GameCard";
 
 const Home = () => {
-    const [refreshing, setRefreshing] = useState(false);
-
     const {user, setUser, setIsLoggedIn} = useGlobalContext();
-    const {data: myGames} = useAppwrite(() => getMyGames(user.$id));
-
+    const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
 
         setRefreshing(false);
-    }
+    };
+
 
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
-                data={myGames}
+                data={null}
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
                     <GameCard game={item} />
@@ -37,7 +33,7 @@ const Home = () => {
                                     Olá,
                                 </Text>
                                 <Text className="text-2xl font-psemibold text-accent-200">
-                                    {user.username}
+                                    {user?.username}
                                 </Text>
                             </View>
 
