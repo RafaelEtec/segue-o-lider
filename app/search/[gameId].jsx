@@ -27,8 +27,7 @@ const Game = () => {
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
                     <GameCardById
-                        participants={item}
-                        partId={item.$id}
+                        participants={item} partId={item.$id}
                     />
                 )}
                 ListHeaderComponent={() => (

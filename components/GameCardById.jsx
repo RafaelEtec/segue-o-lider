@@ -1,8 +1,7 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native'
 import React, {useState} from 'react'
 import icons from "../constants/icons";
-import {addPoint} from "../lib/appwrite";
-import {takePoint} from "../lib/appwrite";
+import {addPoint, takePoint} from "../lib/appwrite";
 
 const GameCardById = (
     {
@@ -17,15 +16,13 @@ const GameCardById = (
     }) => {
 
     const [point, setPoint] = useState(points)
-
-    const addPoints = async () => {
+    const add = async () => {
         await addPoint(id, point);
-        setPoint(point+1)
+        setPoint(point+1);
     }
-
-    const takePoints = async () => {
+    const take = async () => {
         await takePoint(id, point);
-        setPoint(point-1)
+        setPoint(point-1);
     }
 
     return (
@@ -52,7 +49,7 @@ const GameCardById = (
                 </View>
                 <View className="pt-1 pr-2 flex justify-center flex-col">
                     <TouchableOpacity
-                        onPress={addPoints}
+                        onPress={() => add()}
                     >
                         <Image
                             source={icons.add}
@@ -60,8 +57,9 @@ const GameCardById = (
                             resizemode='contain'
                         />
                     </TouchableOpacity>
+
                     <TouchableOpacity
-                        onPress={takePoints}
+                        onPress={() => take()}
                     >
                         <Image
                             source={icons.minus}
@@ -69,6 +67,13 @@ const GameCardById = (
                             resizemode='contain'
                         />
                     </TouchableOpacity>
+                </View>
+                <View className="pt-5 pr-5">
+                    <Image
+                        source={icons.menu}
+                        className="w-2 h-8"
+                        resizemode='contain'
+                    />
                 </View>
             </View>
         </View>
