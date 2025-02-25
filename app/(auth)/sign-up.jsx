@@ -61,7 +61,6 @@ const SignUp = () => {
                     <FormField
                         title="Email"
                         value={form.email}
-                        placeholder="segueolider@gmail.com"
                         handleChangeText={(e) => setForm({
                             ...form,
                             email: e})}

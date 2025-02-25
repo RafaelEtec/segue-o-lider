@@ -20,16 +20,24 @@ const Create = () => {
     });
 
     const submit = () => {
+        console.log(uploading)
+    }
 
+    const addParticipant = (friend) => {
+        console.log("Selected: " + friend.id);
     }
 
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
-                data={null}
+                data={[{id: 1, name: "Juão"}, {id: 2, name: "Karina"}, {id: 3, name: "Maicon"}, {id: 4, name: "Maria"}, {id: 5, name: "Jéssica"}, {id: 6, name: "Erik"}, {id: 7, name:"Jhon"}]}
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
-                    <Text>Nothing</Text>
+                    <TouchableOpacity onPress={() => addParticipant(item)}>
+                        <FriendCard
+                            friend={item}
+                        />
+                    </TouchableOpacity>
                 )}
                 ListHeaderComponent={() => (
                     <ScrollView className="px-4 my-6">
@@ -67,22 +75,21 @@ const Create = () => {
                                     </View>
                                 )}
                             </TouchableOpacity>
-                        </View>
 
-                        <Text className="text-base text-gray-100 font-pmedium">
-                            Adicione Amigos ao Jogo
-                        </Text>
+                            <Text className="mt-6 text-base text-gray-100 font-pmedium">
+                                Participantes
+                            </Text>
+                        </View>
                     </ScrollView>
                 )}
-                ListFooterComponent={() => (
-                    <CustomButton
-                        title="Criar"
-                        handlePress={submit}
-                        containerStyles="mt-7"
-                        isLoading={uploading}
-                    />
-                )}
             />
+            <View className="px-4 my-4">
+                <CustomButton
+                    title="Criar"
+                    handlePress={submit}
+                    isLoading={uploading}
+                />
+            </View>
         </SafeAreaView>
     )
 }
