@@ -1,16 +1,23 @@
 import {FlatList, Text, TouchableOpacity, View, Image} from 'react-native'
 import React from 'react'
 import {useGlobalContext} from "../../context/GlobalProvider";
-import {signOut} from "../../lib/appwrite";
+import {getFriendsIds, signOut} from "../../lib/appwrite";
 import {router} from "expo-router";
 import {SafeAreaView} from "react-native-safe-area-context";
 import GameCard from "../../components/GameCard";
 import EmptyState from "../../components/EmptyState";
 import icons from "../../constants/icons";
 import InfoBox from "../../components/InfoBox";
+import useAppwrite from "../../lib/useAppwrite";
 
 const Profile = () => {
     const { user, setUser, setIsLoggedIn } = useGlobalContext();
+
+    const {data: friendsIds} = useAppwrite(() => getFriendsIds(user.accountId));
+    let friendsTotal = 0;
+    for (let i = 0; i < friendsIds.length; i++) {
+        if (friendsIds[i].status === "accepted") friendsTotal++;
+    }
 
     const logout = async () => {
         await signOut();
@@ -76,7 +83,7 @@ const Profile = () => {
 
                             />
                             <InfoBox
-                                title="0"
+                                title={friendsTotal}
                                 subtitle="Amigos"
                                 titleStyles="text-xl"
                             />

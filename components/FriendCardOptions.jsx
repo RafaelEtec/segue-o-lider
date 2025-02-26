@@ -1,9 +1,9 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import icons from "../constants/icons";
 import {useGlobalContext} from "../context/GlobalProvider";
 import {showMessage} from "react-native-flash-message";
-import {acceptFriendRequest, inviteFriendById} from "../lib/appwrite";
+import {acceptFriendRequest, denyFriendRequest, inviteFriendById} from "../lib/appwrite";
 import {router} from "expo-router";
 
 const FriendCardOptions = (
@@ -16,17 +16,20 @@ const FriendCardOptions = (
         }
     }) => {
     const {user} = useGlobalContext();
+    const [handleStatus, setHandleStatus] = useState(status)
 
     const submitAccept = async () => {
         const result = await acceptFriendRequest(user.accountId, accountId2);
         if (!result) return showAlertDefault("Opa :/", "Falha na requisição")
         showAlertSuccess("Boa!", username + " foi adicionado!");
-        router.push();
+        setHandleStatus("accepted");
     }
 
     const submitDeny = async () => {
-
+        const result = await denyFriendRequest(user.accountId, accountId2);
+        if (!result) return showAlertDefault("Opa :/", "Falha na requisição")
         showAlertDefault("Vish", "Pedido de amizade recusado")
+        setHandleStatus("denied");
     }
 
     const showAlertDefault = (title, description) => {
@@ -45,8 +48,9 @@ const FriendCardOptions = (
     }
 
     let showStatus = "";
-    if (status === "sent") showStatus = "Aguardando confirmação";
-    if (status === "awaiting response") showStatus = "Adicionar à lista de amigos?";
+    if (handleStatus === "sent") showStatus = "Aguardando confirmação";
+    if (handleStatus === "awaiting response") showStatus = "Adicionar à lista de amigos?";
+    if (handleStatus === "denied") showStatus = "Pedido recusado"
 
     return (
         <View className="w-full h-16 flex-row mt-4">
@@ -64,9 +68,11 @@ const FriendCardOptions = (
                 </Text>
             </View>
             <View>
-                { status === "sent" ?(
+                { handleStatus === "sent" ?(
                     <></>
-                ) :status === "awaiting response" ? (
+                ) : handleStatus === "denied" ? (
+                    <></>
+                ) : handleStatus === "awaiting response" ? (
                     <>
                         <TouchableOpacity
                             onPress={submitAccept}
@@ -98,9 +104,6 @@ const FriendCardOptions = (
                         />
                     </>
                 )}
-
-
-
             </View>
         </View>
     );
