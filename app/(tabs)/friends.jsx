@@ -18,7 +18,7 @@ const Friends = () => {
     const {data: friendsIds, refetch} = useAppwrite(() => getFriendsIds(user.accountId));
     const showFriends = [];
     for (let i = 0; i < friendsIds.length; i++) {
-        showFriends.push(<FriendCardOptions friend={friendsIds[i]} />);
+        showFriends.push(<FriendCardOptions key={i} friend={friendsIds[i]} />);
     }
 
     const [friend, setFriend] = useState(null)

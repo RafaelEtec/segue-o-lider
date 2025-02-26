@@ -39,6 +39,8 @@ import minus from "@/assets/icons/minus.png";
 import crown from "@/assets/icons/crown.png";
 import menu from "@/assets/icons/menu.png";
 import upload from "@/assets/icons/upload.png";
+import accept from "@/assets/icons/accept.png";
+import deny from "@/assets/icons/deny.png";
 
 export default {
 	google,
@@ -81,5 +83,7 @@ export default {
 	minus,
 	crown,
 	menu,
-	upload
+	upload,
+	accept,
+	deny
 };
