@@ -1,0 +1,97 @@
+import {View, Text, FlatList, TouchableOpacity, ScrollView, Image, Alert} from 'react-native'
+import React, {useState} from 'react'
+import {useGlobalContext} from "../../context/GlobalProvider";
+import Moment from "moment";
+import {SafeAreaView} from "react-native-safe-area-context";
+import FormField from "../../components/FormField";
+import icons from "../../constants/icons";
+import CustomButton from "../../components/CustomButton";
+import {findUserByEmail, getFriends, inviteFriendById} from "../../lib/appwrite";
+import {showMessage} from 'react-native-flash-message';
+import FriendCard from "../../components/FriendCard";
+import useAppwrite from "../../lib/useAppwrite";
+
+const Friends = () => {
+    const {user} = useGlobalContext();
+
+    const [foundF, setFoundF] = useState(null)
+    const [formNewFriend, setFormNewFriend] = useState({email: '',});
+    const findUser = async () => {
+        if (formNewFriend.email === "") return;
+        if (formNewFriend.email === user.email) return showAlertDefault("Opa :/", "Não é possível adicionar a si mesmo");
+
+        const found = await findUserByEmail(formNewFriend.email);
+        if (found === null) return showAlertDefault("Opa :/", "Usuário não encontrado")
+
+        setFoundF(found);
+        formNewFriend.email = '';
+    }
+
+    const submitFriendRequest = async () => {
+        const result = await inviteFriendById(user.$id, foundF.$id);
+        if (!result) return showAlertDefault("Opa :/", "Não foi possível convidar o usuário")
+        showAlertSuccess("Boa!", "O pedido foi enviado")
+    }
+
+    const showAlertDefault = (title, description) => {
+        clearFields();
+        showMessage({
+            message: title,
+            description: description,
+            type: "default",
+        })
+    }
+    const showAlertSuccess = (title, description) => {
+        clearFields();
+        showMessage({
+            message: title,
+            description: description,
+            type: "success",
+        })
+    }
+
+    const clearFields = () => {
+        setFoundF(null);
+        formNewFriend.email = '';
+    }
+
+    return (
+        <SafeAreaView className="bg-black-300 h-full">
+            <ScrollView className="px-4 my-6">
+                <Text className="text-2xl text-accent-200 font-psemibold">
+                    Adicione Amigos
+                </Text>
+
+                <FormField
+                    title="Convide-o pelo seu E-mail"
+                    value={formNewFriend.email}
+                    placeholder="fulano@gmail.com"
+                    handleChangeText={(e) => setFormNewFriend({...formNewFriend, email: e})}
+                    otherStyles="mt-10 mb-4"
+                    onEndEditing={findUser}
+                />
+
+                <View className="w-full h-20 bg-black-250 rounded-2xl items-center justify-center">
+                {foundF !== null ? (
+                    <FriendCard friend={foundF} />
+                ) : (
+                    <Text className="text-gray-100 font-pmedium">Encontre um amigo</Text>
+                )}
+                </View>
+                {foundF !== null ? (
+                    <CustomButton
+                        title="Convidar"
+                        handlePress={submitFriendRequest}
+                        containerStyles="mt-2"
+                    />
+                ) : (<></>)}
+
+                <View>
+
+                </View>
+
+            </ScrollView>
+        </SafeAreaView>
+    )
+}
+export default Friends

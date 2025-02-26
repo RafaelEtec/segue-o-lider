@@ -7,30 +7,34 @@ import Moment from "moment/moment";
 import icons from "../../constants/icons";
 import FriendCard from "../../components/FriendCard";
 import CustomButton from "../../components/CustomButton";
+import EmptyState from "../../components/EmptyState";
+import EmptyStateFriends from "../../components/EmptyStateFriends";
 
 const Create = () => {
-    const {user, setUser, setIsLoggedIn} = useGlobalContext();
+    const {user} = useGlobalContext();
 
-    const [uploading, setUploading] = useState(false)
+    const [uploading, setUploading] = useState(false);
     const [form, setForm] = useState({
-        title: null,
+        title: '',
         thumbmail: null,
         creator: user.$id,
-        dateCreated: Moment().format('L')
+        dateCreated: Moment().format('L'),
     });
 
+    const [participants, setParticipants] = useState(false);
+
     const submit = () => {
-        console.log(uploading)
-    }
+        console.log(form)
+    };
 
     const addParticipant = (friend) => {
         console.log("Selected: " + friend.id);
-    }
+    };
 
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
-                data={[{id: 1, name: "Juão"}, {id: 2, name: "Karina"}, {id: 3, name: "Maicon"}, {id: 4, name: "Maria"}, {id: 5, name: "Jéssica"}, {id: 6, name: "Erik"}, {id: 7, name:"Jhon"}]}
+                data={null}
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
                     <TouchableOpacity onPress={() => addParticipant(item)}>
@@ -48,7 +52,7 @@ const Create = () => {
                         <FormField
                             title="Título"
                             value={form.title}
-                            handleChange={(e) => setForm({...form, title: e})}
+                            onEndEditing={(e) => form.title = e}
                             otherStyles="mt-10"
                         />
 
@@ -79,17 +83,31 @@ const Create = () => {
                             <Text className="mt-6 text-base text-gray-100 font-pmedium">
                                 Participantes
                             </Text>
+                            <View className="w-full h-fit bg-black-250">
+
+                            </View>
                         </View>
                     </ScrollView>
                 )}
+                ListEmptyComponent={() => (
+                    <EmptyStateFriends
+                        title="Nenhum amigo encontrado"
+                        subtitle="Convide a galera e descubra o melhor!"
+                    />
+                )}
             />
-            <View className="px-4 my-4">
-                <CustomButton
-                    title="Criar"
-                    handlePress={submit}
-                    isLoading={uploading}
-                />
-            </View>
+                {participants !== null ? (
+                    <View className="px-4 my-4">
+                            <CustomButton
+                                title="Criar"
+                                handlePress={submit}
+                                isLoading={uploading}
+                            />
+                    </View>
+                ) : (
+                    <>
+                    </>
+                )}
         </SafeAreaView>
     )
 }

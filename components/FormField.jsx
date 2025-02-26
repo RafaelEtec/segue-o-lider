@@ -7,6 +7,7 @@ const FormField = ({
     value,
     placeholder,
     handleChangeText,
+    onEndEditing,
     otherStyles,
     ...props
 }) => {
@@ -24,6 +25,7 @@ const FormField = ({
                     placeholder={placeholder}
                     placeholderTextColor="#666876"
                     onChangeText={handleChangeText}
+                    onEndEditing={onEndEditing}
                     secureTextEntry={title === 'Senha' && !showPassword}
                     {...props}
                 />

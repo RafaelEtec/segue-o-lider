@@ -3,6 +3,7 @@ import React from 'react';
 import {Tabs, Redirect} from 'expo-router';
 import icons from '../../constants/icons';
 import {useGlobalContext} from "../../context/GlobalProvider";
+import FlashMessage from "react-native-flash-message";
 
 const TabIcon = ({icon, color, focused}) => {
     return (
@@ -75,13 +76,13 @@ const TabsLayout = () => {
                     }}
                 />
                 <Tabs.Screen
-                    name="leaderboard"
+                    name="friends"
                     options={{
-                        title: 'Líderes',
+                        title: 'Amigos',
                         headerShown: false,
                         tabBarIcon: ({color, focused}) => (
                             <TabIcon
-                                icon={icons.star}
+                                icon={icons.people}
                                 color={color}
                                 name=""
                                 focused={focused}
@@ -105,6 +106,7 @@ const TabsLayout = () => {
                     }}
                 />
             </Tabs>
+            <FlashMessage position="top" />
         </>
     )
 }

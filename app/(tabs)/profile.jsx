@@ -72,6 +72,13 @@ const Profile = () => {
                                 title="0"
                                 subtitle="Pontos"
                                 titleStyles="text-xl"
+                                containerStyles="mr-8 mt-4"
+
+                            />
+                            <InfoBox
+                                title="0"
+                                subtitle="Amigos"
+                                titleStyles="text-xl"
                             />
                         </View>
                         <View className="w-full flex-1 mt-4 pt-4 pb-2 border-t-2 border-t-black-250">
