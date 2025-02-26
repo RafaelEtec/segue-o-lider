@@ -32,7 +32,7 @@ const Home = () => {
                                 <Text className="font-pmedium text-sm text-gray-100">
                                     Olá,
                                 </Text>
-                                <Text className="text-2xl font-psemibold text-accent-200">
+                                <Text className="text-2xl font-psemibold text-accent-200" numberOfLines={1}>
                                     {user?.username}
                                 </Text>
                             </View>

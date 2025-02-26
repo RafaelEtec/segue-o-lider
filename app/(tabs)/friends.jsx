@@ -6,15 +6,22 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 import icons from "../../constants/icons";
 import CustomButton from "../../components/CustomButton";
-import {findUserByEmail, getFriends, inviteFriendById} from "../../lib/appwrite";
+import {findUserByEmail, findUserById, getFriendsIds, inviteFriendById} from "../../lib/appwrite";
 import {showMessage} from 'react-native-flash-message';
 import FriendCard from "../../components/FriendCard";
 import useAppwrite from "../../lib/useAppwrite";
+import FriendCardOptions from "../../components/FriendCardOptions";
 
 const Friends = () => {
     const {user} = useGlobalContext();
 
-    const [foundF, setFoundF] = useState(null)
+    const {data: friendsIds, refetch} = useAppwrite(() => getFriendsIds(user.accountId));
+    const showFriends = [];
+    for (let i = 0; i < friendsIds.length; i++) {
+        showFriends.push(<FriendCardOptions friend={friendsIds[i]} />);
+    }
+
+    const [friend, setFriend] = useState(null)
     const [formNewFriend, setFormNewFriend] = useState({email: '',});
     const findUser = async () => {
         if (formNewFriend.email === "") return;
@@ -23,14 +30,21 @@ const Friends = () => {
         const found = await findUserByEmail(formNewFriend.email);
         if (found === null) return showAlertDefault("Opa :/", "Usuário não encontrado")
 
-        setFoundF(found);
+        setFriend(found);
         formNewFriend.email = '';
     }
 
     const submitFriendRequest = async () => {
-        const result = await inviteFriendById(user.$id, foundF.$id);
+        const result = await inviteFriendById(user, friend);
         if (!result) return showAlertDefault("Opa :/", "Não foi possível convidar o usuário")
         showAlertSuccess("Boa!", "O pedido foi enviado")
+    }
+
+    const [refreshing, setRefreshing] = useState(false)
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await refetch();
+        setRefreshing(false);
     }
 
     const showAlertDefault = (title, description) => {
@@ -51,7 +65,8 @@ const Friends = () => {
     }
 
     const clearFields = () => {
-        setFoundF(null);
+        onRefresh();
+        setFriend(null);
         formNewFriend.email = '';
     }
 
@@ -72,13 +87,13 @@ const Friends = () => {
                 />
 
                 <View className="w-full h-20 bg-black-250 rounded-2xl items-center justify-center">
-                {foundF !== null ? (
-                    <FriendCard friend={foundF} />
+                {friend !== null ? (
+                    <FriendCard friend={friend} />
                 ) : (
                     <Text className="text-gray-100 font-pmedium">Encontre um amigo</Text>
                 )}
                 </View>
-                {foundF !== null ? (
+                {friend !== null ? (
                     <CustomButton
                         title="Convidar"
                         handlePress={submitFriendRequest}
@@ -86,8 +101,9 @@ const Friends = () => {
                     />
                 ) : (<></>)}
 
-                <View>
-
+                <View className="my-6">
+                    <Text className="text-gray-100 font-pmedium">Lista de Amigos</Text>
+                    {showFriends}
                 </View>
 
             </ScrollView>
