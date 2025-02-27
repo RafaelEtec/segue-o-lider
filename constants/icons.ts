@@ -41,6 +41,7 @@ import menu from "@/assets/icons/menu.png";
 import upload from "@/assets/icons/upload.png";
 import accept from "@/assets/icons/accept.png";
 import deny from "@/assets/icons/deny.png";
+import refresh from "@/assets/icons/refresh.png";
 
 export default {
 	google,
@@ -85,5 +86,6 @@ export default {
 	menu,
 	upload,
 	accept,
-	deny
+	deny,
+	refresh,
 };

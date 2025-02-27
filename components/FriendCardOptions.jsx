@@ -95,14 +95,20 @@ const FriendCardOptions = (
                             />
                         </TouchableOpacity>
                     </>
-                ) : (
+                ) : handleStatus === "accepted" ?(
                     <>
-                        <Image
-                            source={icons.menu}
-                            className="w-8 h-8 mt-4"
-                            resizeMode="contain"
-                        />
+                        <TouchableOpacity
+
+                        >
+                            <Image
+                                source={icons.menu}
+                                className="w-8 h-8 mt-4"
+                                resizeMode="contain"
+                            />
+                        </TouchableOpacity>
                     </>
+                ) : (
+                    <></>
                 )}
             </View>
         </View>

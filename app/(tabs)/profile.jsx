@@ -79,7 +79,7 @@ const Profile = () => {
                                 title="0"
                                 subtitle="Pontos"
                                 titleStyles="text-xl"
-                                containerStyles="mr-8 mt-4"
+                                containerStyles="mr-8"
 
                             />
                             <InfoBox
