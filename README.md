@@ -1,6 +1,15 @@
 # Bem vindo ao Segue o Líder 👋
 
-Este é um projeto React Native, de funcionalidade simples, porém que para mim, é muito importante, pois envolveu o estudo de diversos tópicos relacionados à criação de uma aplicação mobile. Sendo este o motivo que me fez executá-lo, estudar a fundo o desenvolvimento mobile multiplataforma.
+Este é um projeto React Native, de funcionalidade simples, porém que para mim, é muito importante, pois envolveu o estudo de diversos tópicos relacionados à criação de uma aplicação mobile. Sendo este o motivo que me fez executá-lo, estudar a fundo o desenvolvimento mobile multiplataforma. \
+
+Sua principal função é armazenar a pontuação dos jogadores, dado certo jogo jogado pessoalmente.
+<details>
+<summary>Exemplo</summary>
+
+  ![image](https://github.com/user-attachments/assets/97086107-8541-4bda-9de7-7c2c3c0b5316)
+  ![image](https://github.com/user-attachments/assets/4c89e869-a280-4fb9-9510-1c3a9a86aec1)
+
+</details>
 
 ## ⚙️ Tech Stack
 
@@ -22,6 +31,8 @@ Este é um projeto React Native, de funcionalidade simples, porém que para mim,
 👉 Funcionalidade de Atualização por Gestos: Os usuários podem atualizar o conteúdo com um simples gesto de arrastar para obter informações atualizadas.
 
 👉 Navegação por Abas: Navegue facilmente entre seções como Menu, Criar jogo, Amigos e Perfil usando navegação por abas.
+
+👉 Lista de Amigos: Você pode adicionar amigos e incluí-los em partidas que você também participa.
 
 👉 Tela de Criação de Jogos para Upload de Mídia: Faça upload de jogos com imagem diretamente do app com seleção integrada de mídia.
 
