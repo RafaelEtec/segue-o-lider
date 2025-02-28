@@ -1,50 +1,37 @@
-# Welcome to your Expo app 👋
+# Bem vindo ao Segue o Líder 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este é um projeto React Native, de funcionalidade simples, porém que para mim, é muito importante, pois envolveu o estudo de diversos tópicos relacionados à criação de uma aplicação mobile. Sendo este o motivo que me fez executá-lo, estudar a fundo o desenvolvimento mobile multiplataforma.
 
-## Get started
+## ⚙️ Tech Stack
 
-1. Install dependencies
+- [Figma](https://www.figma.com/design/8manjlz4aHX1PIO7uIuDlB/Segue-o-L%C3%ADder?node-id=0-1&t=Ia6Ss9Nr5FnLH1Zn-1) (Link para o Arquivo de Design)
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [Nativewind](https://www.nativewind.dev/)
+- [Flash Message](https://www.npmjs.com/package/react-flash-message)
+- [Appwrite](https://appwrite.io/)
 
-   ```bash
-   npm install
-   ```
+## 🔋 Features</a>
 
-2. Start the app
+👉 Tela de Boas-Vindas: Gráficos envolventes e instruções claras dão as boas-vindas aos usuários no app.
 
-   ```bash
-    npx expo start
-   ```
+👉 Sistema Robusto de Autenticação e Autorização: Login seguro por e-mail protege as contas dos usuários.
 
-In the output, you'll find options to open the app in a
+👉 Tela Inicial Dinâmica: Exibe os jogos que você participa para uma navegação fluida.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+👉 Funcionalidade de Atualização por Gestos: Os usuários podem atualizar o conteúdo com um simples gesto de arrastar para obter informações atualizadas.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+👉 Navegação por Abas: Navegue facilmente entre seções como Menu, Criar jogo, Amigos e Perfil usando navegação por abas.
 
-## Get a fresh project
+👉 Tela de Criação de Jogos para Upload de Mídia: Faça upload de jogos com imagem diretamente do app com seleção integrada de mídia.
 
-When you're ready, run:
+👉 Tela de Perfil com Informações Detalhadas: Visualize detalhes da conta e atividades, incluindo jogos que participa, pontos totais e número de amigos, para uma experiência personalizada.
 
-```bash
-npm run reset-project
-```
+👉 Responsividade: Desempenho fluido e adaptação a diversos dispositivos e tamanhos de tela para uma experiência consistente.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+E muito mais, incluindo arquitetura de código e reutilização.
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📌 To-do
+- Finalizar pequenas funcionalidades
+- Fazer upload à Google Play Store
+- Fazer upload à Apple App Store
