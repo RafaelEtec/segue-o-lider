@@ -29,61 +29,40 @@ const Create = () => {
         if (friendsIds[i].status === "accepted") {
             showFriends.push(
                 <TouchableOpacity onPress={() => addParticipant(friendsIds[i])}>
-                    <FriendCardGame key={key} friend={friendsIds[i]} />
+                    <FriendCardGame key={key++} friend={friendsIds[i]} />
                 </TouchableOpacity>
             );
-            key++;
         }
     }
 
-    let listParticipants = [];
-    let seeParticipants = [];
-    let [showParticipants, setShowParticipants] = useState(null);
+    let participantsCard = [];
+    let participantsId = [];
+    let [showParticipants, setShowParticipants] = useState([]);
     const addParticipant = (participant) => {
-        if (alreadyParticipant(participant)) return console.log("Participant already exists");
+        if (alreadyParticipant(participant)) return console.log("Participant already");
+        participantsId.push(participant.accountId2);
 
-        listParticipants.push(participant);
-        for (let i = 0; i < listParticipants.length; i++) {
-            seeParticipants.push(
-                <TouchableOpacity>
-                    <FriendCardAvatar key={key} friend={participant} />
-                </TouchableOpacity>
-            );
-            key++;
-        }
-        setShowParticipants(seeParticipants);
-        console.log(listParticipants);
-        console.log(listParticipants.length);
+        participantsCard.push(
+            <TouchableOpacity>
+                <FriendCardAvatar friend={participant} />
+            </TouchableOpacity>
+        );
+
+        setShowParticipants(participantsCard);
     }
 
     const alreadyParticipant = (participant) => {
-        for (let i = 0; i < listParticipants.length; i++) {
-            if (listParticipants[i].accountId2 === participant.accountId2) return true;
+        for (let i = 0; i < participantsId.length; i++) {
+            if (participantsId[i] === participant.accountId2) return true;
         }
         return false;
     }
 
-    // let participants = [];
-    // let participantsId = [];
-    // const [keyP, setKeyP] = useState(1);
-    // let [showParticipants, setShowParticipants] = useState(null);
-    // const addParticipant = async (participant) => {
-    //     participants.push(participant.accountId2);
-    //     for (let i = 0; i < keyP; i++) {
-    //         participants.push(
-    //             <TouchableOpacity>
-    //                 <FriendCardAvatar key={i} friend={participant} />
-    //             </TouchableOpacity>
-    //         );
-    //     }
-    //     setKeyP(keyP+1);
-    //     console.log("after: " + keyP);
-    //     setShowParticipants(participants);
-    // }
-
     const submit = async () => {
         console.log(form);
-        console.log("jsagsa");
+        console.log(participantsId);
+        console.log(participantsCard);
+        console.log(showParticipants);
     };
 
     const [refreshing, setRefreshing] = useState(false);
@@ -96,8 +75,9 @@ const Create = () => {
 
     const clearParticipants = async () => {
         console.log("clearParticipants");
-        setShowParticipants(null);
-        listParticipants = [];
+        setShowParticipants([]);
+        participantsCard = [];
+        participantsId = [];
     }
 
     return (
@@ -142,7 +122,7 @@ const Create = () => {
                         <View className="flex-1 items-center">
                             <View className="flex-row justify-start w-full">
                                 <Text className="mt-6 text-base text-gray-100 font-pmedium">
-                                    Amigos
+                                    Friends
                                 </Text>
                                 <TouchableOpacity onPress={refreshFriends}>
                                     <Image
@@ -157,7 +137,7 @@ const Create = () => {
                         <View className="flex-rol items-center">
                             <View className="flex-row justify-start w-full">
                                 <Text className="mt-6 text-base text-gray-100 font-pmedium">
-                                    Participantes
+                                    Participants
                                 </Text>
                                 <TouchableOpacity onPress={clearParticipants}>
                                     <Image
