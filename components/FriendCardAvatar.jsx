@@ -5,7 +5,6 @@ const FriendCardAvatar = (
     {
         friend: {
             avatar,
-            username,
         }
     }) => {
 
