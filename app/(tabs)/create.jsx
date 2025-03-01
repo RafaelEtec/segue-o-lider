@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native'
+import {View, Text, ScrollView, TouchableOpacity, Image, FlatList} from 'react-native'
 import React, {useState} from 'react'
 import {SafeAreaView} from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
@@ -10,6 +10,7 @@ import useAppwrite from "../../lib/useAppwrite";
 import {getFriendsIds} from "../../lib/appwrite";
 import FriendCardGame from "../../components/FriendCardGame";
 import FriendCardAvatar from "../../components/FriendCardAvatar";
+import {FlashList} from "@shopify/flash-list";
 
 const Create = () => {
     const {user} = useGlobalContext();
@@ -18,8 +19,9 @@ const Create = () => {
     const [form, setForm] = useState({
         title: '',
         thumbmail: null,
-        creator: user.$id,
+        creator: user.accountId,
         dateCreated: Moment().format('L'),
+        participants: []
     });
 
     const {data: friendsIds, refetch} = useAppwrite(() => getFriendsIds(user.accountId));
@@ -35,34 +37,27 @@ const Create = () => {
         }
     }
 
-    let participantsCard = [];
-    let participantsId = [];
-    let [showParticipants, setShowParticipants] = useState([]);
-    const addParticipant = (participant) => {
+    const [showParticipants, setShowParticipants] = useState([]);
+    const addParticipant = async (participant) => {
         if (alreadyParticipant(participant)) return console.log("Participant already");
-        participantsId.push(participant.accountId2);
 
-        participantsCard.push(
-            <TouchableOpacity>
-                <FriendCardAvatar friend={participant} />
-            </TouchableOpacity>
-        );
-
-        setShowParticipants(participantsCard);
+        form.participants.push(participant);
+        setShowParticipants(form.participants);
     }
 
     const alreadyParticipant = (participant) => {
-        for (let i = 0; i < participantsId.length; i++) {
-            if (participantsId[i] === participant.accountId2) return true;
+        for (let i = 0; i < form.participants.length; i++) {
+            if (form.participants[i] === participant) {
+                console.log("sim");
+                return true;
+            }
         }
+        console.log("não")
         return false;
     }
 
     const submit = async () => {
         console.log(form);
-        console.log(participantsId);
-        console.log(participantsCard);
-        console.log(showParticipants);
     };
 
     const [refreshing, setRefreshing] = useState(false);
@@ -75,9 +70,8 @@ const Create = () => {
 
     const clearParticipants = async () => {
         console.log("clearParticipants");
+        form.participants = [];
         setShowParticipants([]);
-        participantsCard = [];
-        participantsId = [];
     }
 
     return (
@@ -147,7 +141,15 @@ const Create = () => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            {showParticipants}
+                            <View className="flex-1 items-center h-full">
+                                <FlashList
+                                    data={showParticipants}
+                                    renderItem={({item}) => (
+                                        <FriendCardAvatar friend={item} />
+                                    )}
+                                    estimatedItemSize={100}
+                                />
+                            </View>
                         </View>
                     </View>
 
