@@ -8,14 +8,13 @@ import {useGlobalContext} from "../../context/GlobalProvider";
 import GameCard from "../../components/GameCard";
 
 const Home = () => {
-    const {user, setUser, setIsLoggedIn} = useGlobalContext();
+    const {user} = useGlobalContext();
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
 
         setRefreshing(false);
     };
-
 
     return (
         <SafeAreaView className="bg-black-300 h-full">

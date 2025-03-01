@@ -1,7 +1,7 @@
-import {FlatList, Text, TouchableOpacity, View, Image} from 'react-native'
-import React from 'react'
+import {FlatList, Text, TouchableOpacity, View, Image, RefreshControl} from 'react-native'
+import React, {useState} from 'react'
 import {useGlobalContext} from "../../context/GlobalProvider";
-import {getFriendsIds, signOut} from "../../lib/appwrite";
+import {getFriendsIds, getMyGames, signOut} from "../../lib/appwrite";
 import {router} from "expo-router";
 import {SafeAreaView} from "react-native-safe-area-context";
 import GameCard from "../../components/GameCard";
@@ -19,6 +19,8 @@ const Profile = () => {
         if (friendsIds[i].status === "accepted") friendsTotal++;
     }
 
+    const {data: myGames, refetch} = useAppwrite(() => getMyGames(user.accountId));
+
     const logout = async () => {
         await signOut();
         setUser(null);
@@ -27,10 +29,17 @@ const Profile = () => {
         router.replace("/sign-in");
     };
 
+    const [refreshing, setRefreshing] = useState(false);
+    const onRefresh = async () => {
+        setRefreshing(true);
+        refetch();
+        setRefreshing(false);
+    }
+
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
-                data={null}
+                data={myGames}
                 keyExtractor={(item) => item.$id}
                 renderItem={({ item }) => (
                     <GameCard game={item}/>
@@ -95,6 +104,8 @@ const Profile = () => {
                         </View>
                     </View>
                 )}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
             />
         </SafeAreaView>
     )

@@ -6,7 +6,7 @@ import {router, usePathname} from 'expo-router';
 const GameCard = (
     {game: {
         title,
-        thumbmail,
+        thumbnail,
         creator: {
             username,
             avatar
@@ -42,7 +42,7 @@ const GameCard = (
                 }}
                 className="w-full h-60 rounded-xl mt-3 relative justify-center items-center">
                 <Image
-                    source={{uri: thumbmail}}
+                    source={{uri: thumbnail}}
                     className="w-full h-full rounded-lg"
                     resizeMode="cover"
                 />

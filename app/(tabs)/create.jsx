@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, TouchableOpacity, Image, FlatList} from 'react-native'
+import {View, Text, ScrollView, TouchableOpacity, Image, FlatList, Alert} from 'react-native'
 import React, {useState} from 'react'
 import {SafeAreaView} from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
@@ -7,18 +7,21 @@ import Moment from "moment/moment";
 import icons from "../../constants/icons";
 import CustomButton from "../../components/CustomButton";
 import useAppwrite from "../../lib/useAppwrite";
-import {getFriendsIds} from "../../lib/appwrite";
+import {createGame, getFriendsIds, insertParticipants} from "../../lib/appwrite";
 import FriendCardGame from "../../components/FriendCardGame";
 import FriendCardAvatar from "../../components/FriendCardAvatar";
+import * as DocumentPicker from 'expo-document-picker';
 import {FlashList} from "@shopify/flash-list";
+import {showMessage} from "react-native-flash-message";
+import {router} from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 
 const Create = () => {
     const {user} = useGlobalContext();
-
     const [uploading, setUploading] = useState(false);
     const [form, setForm] = useState({
         title: '',
-        thumbmail: null,
+        thumbnail: null,
         creator: user.accountId,
         dateCreated: Moment().format('L'),
         participants: []
@@ -48,30 +51,82 @@ const Create = () => {
     const alreadyParticipant = (participant) => {
         for (let i = 0; i < form.participants.length; i++) {
             if (form.participants[i] === participant) {
-                console.log("sim");
                 return true;
             }
         }
-        console.log("não")
         return false;
     }
 
+    const openPicker = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect:[4, 3],
+            quality: 1
+        });
+
+        if (!result.canceled) {
+            setForm({
+                ...form,
+                thumbnail: result.assets[0]
+            });
+        }
+    }
+
     const submit = async () => {
-        console.log(form);
+        setShowParticipants(form.participants);
+        if (!form.title || !form.thumbnail || !form.participants.length) {
+            return showAlertDefault("Opa :/", "Por favor preencha todos os campos")
+        }
+
+        setUploading(true);
+        try {
+            const game = await createGame({...form});
+
+            await insertParticipants(game, user, form.participants);
+
+            showAlertSuccess("Boa!", "Jogo criado com sucesso")
+            router.push('/home')
+        } catch (error) {
+            showAlertDefault("Opa :/", error.message);
+        } finally {
+            setForm({
+                title: '',
+                thumbnail: null,
+                creator: user.accountId,
+                dateCreated: Moment().format('L'),
+                participants: []
+            })
+            setShowParticipants(form.participants);
+            setUploading(false);
+        }
     };
 
     const [refreshing, setRefreshing] = useState(false);
     const refreshFriends = async () => {
-        console.log("refreshing");
         setRefreshing(true);
         refetch();
         setRefreshing(false);
     }
 
     const clearParticipants = async () => {
-        console.log("clearParticipants");
         form.participants = [];
         setShowParticipants([]);
+    }
+
+    const showAlertDefault = (title, description) => {
+        showMessage({
+            message: title,
+            description: description,
+            type: "default",
+        })
+    }
+    const showAlertSuccess = (title, description) => {
+        showMessage({
+            message: title,
+            description: description,
+            type: "success",
+        })
     }
 
     return (
@@ -92,10 +147,10 @@ const Create = () => {
                     <Text className="text-base text-gray-100 font-pmedium">
                         Imagem de exibição
                     </Text>
-                    <TouchableOpacity>
-                        {form.thumbmail ? (
+                    <TouchableOpacity onPress={() => openPicker()}>
+                        {form.thumbnail ? (
                             <Image
-                                source={{uri: form.thumbmail.uri}}
+                                source={{uri: form.thumbnail.uri}}
                                 resizeMode="cover"
                                 className="w-full h-60 rounded-2xl"
                             />
@@ -141,19 +196,18 @@ const Create = () => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <View className="flex-1 items-center h-full">
-                                <FlashList
+                                <FlatList
                                     data={showParticipants}
                                     renderItem={({item}) => (
-                                        <FriendCardAvatar friend={item} />
+                                        <TouchableOpacity>
+                                            <FriendCardAvatar key={key++} friend={item} />
+                                        </TouchableOpacity>
                                     )}
+                                    numColumns={1}
                                     estimatedItemSize={100}
                                 />
-                            </View>
                         </View>
                     </View>
-
-
                 </View>
             </ScrollView>
             <CustomButton

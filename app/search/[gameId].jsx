@@ -50,7 +50,7 @@ const Game = () => {
                             </View>
                         </View>
                         <Image
-                            source={{uri: game.thumbmail}}
+                            source={{uri: game.thumbnail}}
                             className="w-full h-60 rounded-lg"
                             resizeMode="cover"
                         />
