@@ -12,14 +12,15 @@ const Game = () => {
     const {gameId} = useLocalSearchParams();
 
     const { data: game } = useAppwrite(() => getGameById(gameId));
-    const { data: participants } = useAppwrite(() => getParticipantsByGameId(gameId));
+    const { data: participants, refetch} = useAppwrite(() => getParticipantsByGameId(gameId));
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
-
+        refetch();
         setRefreshing(false);
     }
+
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
@@ -27,7 +28,7 @@ const Game = () => {
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
                     <GameCardById
-                        participants={item} partId={item.$id}
+                        key={item.$id} participants={item} partId={item.$id}
                     />
                 )}
                 ListHeaderComponent={() => (

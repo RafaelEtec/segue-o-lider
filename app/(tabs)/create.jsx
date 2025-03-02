@@ -22,19 +22,18 @@ const Create = () => {
     const [form, setForm] = useState({
         title: '',
         thumbnail: null,
-        creator: user.accountId,
+        creator: user.$id,
         dateCreated: Moment().format('L'),
         participants: []
     });
 
-    const {data: friendsIds, refetch} = useAppwrite(() => getFriendsIds(user.accountId));
+    const {data: friendsIds, refetch} = useAppwrite(() => getFriendsIds(user.$id));
     const showFriends = [];
-    let key = 0;
     for (let i = 0; i < friendsIds.length; i++) {
         if (friendsIds[i].status === "accepted") {
             showFriends.push(
                 <TouchableOpacity onPress={() => addParticipant(friendsIds[i])}>
-                    <FriendCardGame key={key++} friend={friendsIds[i]} />
+                    <FriendCardGame key={friendsIds[i].$id} friend={friendsIds[i]} />
                 </TouchableOpacity>
             );
         }
@@ -93,7 +92,7 @@ const Create = () => {
             setForm({
                 title: '',
                 thumbnail: null,
-                creator: user.accountId,
+                creator: user.$id,
                 dateCreated: Moment().format('L'),
                 participants: []
             })
@@ -106,6 +105,7 @@ const Create = () => {
     const refreshFriends = async () => {
         setRefreshing(true);
         refetch();
+        setShowParticipants(form.participants);
         setRefreshing(false);
     }
 
@@ -196,16 +196,18 @@ const Create = () => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                                <FlatList
+                            <View className="w-full h-full flex-col">
+                                <FlashList
                                     data={showParticipants}
                                     renderItem={({item}) => (
                                         <TouchableOpacity>
-                                            <FriendCardAvatar key={key++} friend={item} />
+                                            <FriendCardAvatar key={item.$id} friend={item} />
                                         </TouchableOpacity>
                                     )}
                                     numColumns={1}
-                                    estimatedItemSize={100}
+                                    estimatedItemSize={50}
                                 />
+                            </View>
                         </View>
                     </View>
                 </View>

@@ -13,13 +13,13 @@ import useAppwrite from "../../lib/useAppwrite";
 const Profile = () => {
     const { user, setUser, setIsLoggedIn } = useGlobalContext();
 
-    const {data: friendsIds} = useAppwrite(() => getFriendsIds(user.accountId));
+    const {data: friendsIds} = useAppwrite(() => getFriendsIds(user.$id));
     let friendsTotal = 0;
     for (let i = 0; i < friendsIds.length; i++) {
         if (friendsIds[i].status === "accepted") friendsTotal++;
     }
 
-    const {data: myGames, refetch} = useAppwrite(() => getMyGames(user.accountId));
+    const {data: myGames, refetch} = useAppwrite(() => getMyGames(user.$id));
 
     const logout = async () => {
         await signOut();
@@ -78,12 +78,16 @@ const Profile = () => {
                         />
 
                         <View className="mt-5 flex flex-row">
-                            <InfoBox
-                                title="0"
-                                subtitle="Jogos"
-                                titleStyles="text-xl"
-                                containerStyles="mr-10"
-                            />
+                            <TouchableOpacity
+                                onPress={() => router.push('/home')}
+                            >
+                                <InfoBox
+                                    title="0"
+                                    subtitle="Jogos"
+                                    titleStyles="text-xl"
+                                    containerStyles="mr-10"
+                                />
+                            </TouchableOpacity>
                             <InfoBox
                                 title="0"
                                 subtitle="Pontos"
@@ -91,11 +95,15 @@ const Profile = () => {
                                 containerStyles="mr-8"
 
                             />
-                            <InfoBox
-                                title={friendsTotal}
-                                subtitle="Amigos"
-                                titleStyles="text-xl"
-                            />
+                            <TouchableOpacity
+                                onPress={() => router.push('/friends')}
+                            >
+                                <InfoBox
+                                    title={friendsTotal}
+                                    subtitle="Amigos"
+                                    titleStyles="text-xl"
+                                />
+                            </TouchableOpacity>
                         </View>
                         <View className="w-full flex-1 mt-4 pt-4 pb-2 border-t-2 border-t-black-250">
                             <Text className="text-gray-100 text-lg font-pregular">

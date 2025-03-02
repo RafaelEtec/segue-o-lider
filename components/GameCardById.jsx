@@ -6,10 +6,10 @@ import {addPoint, takePoint} from "../lib/appwrite";
 const GameCardById = (
     {
         participants: {
-            accountId,
-            accountName,
-            accountAvatar,
-            gameId,
+            accountId: {
+                avatar,
+                username,
+            },
             points
         },
         partId: id
@@ -31,14 +31,14 @@ const GameCardById = (
                 <View className="justify-center items-center flex-row flex-1">
                     <View className="w-[65px] h-[65px] justify-center items-center p-0.5">
                         <Image
-                            source={{uri: accountAvatar}}
+                            source={{uri: avatar}}
                             className="w-full h-full rounded-lg"
                             resizeMode="cover"
                         />
                     </View>
                     <View className="justify-center flex-1 ml-3 gap-y-1">
                         <Text className="text-accent-200 font-psemibold text-sm" numberOfLines={1}>
-                            {accountName}
+                            {username}
                         </Text>
                     </View>
                 </View>

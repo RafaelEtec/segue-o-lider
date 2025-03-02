@@ -5,24 +5,34 @@ import images from '../../constants/images';
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
 import {useGlobalContext} from "../../context/GlobalProvider";
-import GameCard from "../../components/GameCard";
+import GameCardHome from "../../components/GameCardHome";
+import useAppwrite from "../../lib/useAppwrite";
+import {getGamesById, getGamesIParticipate, getMyGames} from "../../lib/appwrite";
 
 const Home = () => {
     const {user} = useGlobalContext();
+
+    const {data: gamesId} = useAppwrite(() => getGamesIParticipate(user.$id))
+    let ids = [];
+    for (const game of gamesId) {
+        ids.push(game.gameId);
+    }
+    const {data: myGames, refetch} = useAppwrite(() => getGamesById(ids));
+
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
-
+        refetch();
         setRefreshing(false);
     };
 
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
-                data={null}
+                data={myGames}
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
-                    <GameCard game={item} />
+                    <GameCardHome key={item.$id} game={item}/>
                 )}
                 ListHeaderComponent={() => (
                     <View className="flex my-6 px-4 space-y-6">

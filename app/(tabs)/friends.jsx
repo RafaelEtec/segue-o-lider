@@ -15,10 +15,10 @@ import FriendCardOptions from "../../components/FriendCardOptions";
 const Friends = () => {
     const {user} = useGlobalContext();
 
-    const {data: friendsIds, refetch} = useAppwrite(() => getFriendsIds(user.accountId));
+    const {data: friendsIds, refetch} = useAppwrite(() => getFriendsIds(user.$id));
     const showFriends = [];
     for (let i = 0; i < friendsIds.length; i++) {
-        showFriends.push(<FriendCardOptions key={i} friend={friendsIds[i]} />);
+        showFriends.push(<FriendCardOptions key={friendsIds[i].$id} friend={friendsIds[i]} />);
     }
 
     const [friend, setFriend] = useState(null)
