@@ -12,17 +12,18 @@ import {getGamesById, getGamesIParticipate, getMyGames} from "../../lib/appwrite
 const Home = () => {
     const {user} = useGlobalContext();
 
-    const {data: gamesId} = useAppwrite(() => getGamesIParticipate(user.$id))
+    const {data: gamesId, refetch} = useAppwrite(() => getGamesIParticipate(user.$id));
     let ids = [];
     for (const game of gamesId) {
         ids.push(game.gameId);
     }
-    const {data: myGames, refetch} = useAppwrite(() => getGamesById(ids));
+    const {data: myGames, refetchAll} = useAppwrite(() => getGamesById(ids));
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
-        refetch();
+        await refetch();
+        await refetchAll();
         setRefreshing(false);
     };
 

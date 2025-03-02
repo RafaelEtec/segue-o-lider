@@ -85,7 +85,7 @@ const Create = () => {
             await insertParticipants(game, user, form.participants);
 
             showAlertSuccess("Boa!", "Jogo criado com sucesso")
-            router.push('/home')
+            router.replace('/home')
         } catch (error) {
             showAlertDefault("Opa :/", error.message);
         } finally {
@@ -104,7 +104,7 @@ const Create = () => {
     const [refreshing, setRefreshing] = useState(false);
     const refreshFriends = async () => {
         setRefreshing(true);
-        refetch();
+        await refetch();
         setShowParticipants(form.participants);
         setRefreshing(false);
     }
