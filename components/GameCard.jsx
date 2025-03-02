@@ -13,6 +13,7 @@ const GameCard = (
         },
         gameId,
         dateCreated,
+        $createdAt,
     } }) => {
 
     return (
@@ -31,7 +32,7 @@ const GameCard = (
                             {title}
                         </Text>
                         <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>
-                            {username} {Moment(dateCreated).format('DD/MM/YYYY')}
+                            {username} {Moment($createdAt).format('DD/MM/YYYY')}
                         </Text>
                     </View>
                 </View>
