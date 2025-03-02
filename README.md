@@ -1,6 +1,6 @@
 # Bem vindo ao Segue o Líder 👋
 
-Este é um projeto React Native, de funcionalidade simples, porém que para mim, é muito importante, pois envolveu o estudo de diversos tópicos relacionados à criação de uma aplicação mobile. Sendo este o motivo que me fez executá-lo, estudar a fundo o desenvolvimento mobile multiplataforma. \
+Este é um projeto React Native, de funcionalidade simples, porém que para mim, é muito importante, pois envolveu o estudo de diversos tópicos relacionados à criação de uma aplicação mobile. Sendo este o motivo que me fez executá-lo, estudar a fundo o desenvolvimento mobile multiplataforma.
 
 Sua principal função é armazenar a pontuação dos jogadores, dado certo jogo jogado pessoalmente.
 <details>
@@ -43,6 +43,7 @@ Sua principal função é armazenar a pontuação dos jogadores, dado certo jogo
 E muito mais, incluindo arquitetura de código e reutilização.
 
 ## 📌 To-do
-- Finalizar pequenas funcionalidades
-- Fazer upload à Google Play Store
-- Fazer upload à Apple App Store
+- Refatoração do código
+- Log de atividades
+- Upload à Google Play Store
+- Upload à Apple App Store
