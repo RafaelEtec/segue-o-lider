@@ -1,7 +1,13 @@
 import {FlatList, Text, TouchableOpacity, View, Image, RefreshControl} from 'react-native'
 import React, {useState} from 'react'
 import {useGlobalContext} from "../../context/GlobalProvider";
-import {changeUserAvatar, getFriendsIds, getMyGames, signOut} from "../../lib/appwrite";
+import {
+    changeUserAvatar,
+    getMyGames,
+    getNumTotalFriends, getNumTotalGames,
+    getNumTotalPoints,
+    signOut
+} from "../../lib/appwrite";
 import {router} from "expo-router";
 import {SafeAreaView} from "react-native-safe-area-context";
 import GameCard from "../../components/GameCard";
@@ -15,11 +21,9 @@ import {showMessage} from "react-native-flash-message";
 const Profile = () => {
     const {user, setUser, setIsLoggedIn} = useGlobalContext();
 
-    const {data: friendsIds} = useAppwrite(() => getFriendsIds(user.$id));
-    let friendsTotal = 0;
-    for (let i = 0; i < friendsIds.length; i++) {
-        if (friendsIds[i].status === "accepted") friendsTotal++;
-    }
+    const {data: totalGames} = useAppwrite(() => getNumTotalGames(user.$id));
+    const {data: totalPoints} = useAppwrite(() => getNumTotalPoints(user.$id));
+    const {data: totalFriends} = useAppwrite(() => getNumTotalFriends(user.$id));
 
     const {data: myGames, refetch} = useAppwrite(() => getMyGames(user.$id));
 
@@ -130,14 +134,14 @@ const Profile = () => {
                                 onPress={() => router.push('/home')}
                             >
                                 <InfoBox
-                                    title="0"
+                                    title={totalGames}
                                     subtitle="Jogos"
                                     titleStyles="text-xl"
                                     containerStyles="mr-10"
                                 />
                             </TouchableOpacity>
                             <InfoBox
-                                title="0"
+                                title={totalPoints}
                                 subtitle="Pontos"
                                 titleStyles="text-xl"
                                 containerStyles="mr-8"
@@ -147,7 +151,7 @@ const Profile = () => {
                                 onPress={() => router.push('/friends')}
                             >
                                 <InfoBox
-                                    title={friendsTotal}
+                                    title={totalFriends}
                                     subtitle="Amigos"
                                     titleStyles="text-xl"
                                 />

@@ -21,8 +21,6 @@ const Game = () => {
         setRefreshing(false);
     }
 
-    console.log(gameId)
-
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
