@@ -32,7 +32,7 @@ const Create = () => {
         if (friendsIds[i].status === "accepted") {
             showFriends.push(
                 <TouchableOpacity onPress={() => addParticipant(friendsIds[i])}>
-                    <FriendCardGame key={friendsIds[i].$id} friend={friendsIds[i]} />
+                    <FriendCardGame key={i} friend={friendsIds[i]} />
                 </TouchableOpacity>
             );
         }
@@ -43,7 +43,7 @@ const Create = () => {
         if (alreadyParticipant(participant)) return console.log("Participant already");
 
         form.participants.push(participant);
-        setShowParticipants(form.participants);
+        setShowParticipants(participant);
     }
 
     const alreadyParticipant = (participant) => {
@@ -198,7 +198,7 @@ const Create = () => {
                             <View className="w-full h-full flex-col">
                                 {form.participants.map((participant, p_index) => {
                                     return (
-                                        <TouchableOpacity>
+                                        <TouchableOpacity key={p_index}>
                                             <FriendCardAvatar key={p_index} friend={participant} />
                                         </TouchableOpacity>
                                     )

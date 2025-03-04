@@ -14,10 +14,6 @@ const Friends = () => {
     const {user} = useGlobalContext();
 
     const {data: friendsIds, refetch} = useAppwrite(() => getFriendsIds(user.$id));
-    const showFriends = [];
-    for (let i = 0; i < friendsIds.length; i++) {
-        showFriends.push(<FriendCardOptions key={friendsIds[i].$id} friend={friendsIds[i]} />);
-    }
 
     const [friend, setFriend] = useState(null)
     const [formNewFriend, setFormNewFriend] = useState({email: '',});
@@ -101,7 +97,11 @@ const Friends = () => {
 
                 <View className="my-6">
                     <Text className="text-gray-100 font-pmedium">Lista de Amigos</Text>
-                    {showFriends}
+                    {friendsIds.map((friend, f_index) => {
+                        return (
+                            <FriendCardOptions key={friendsIds[f_index].$id} friend={friend} />
+                        )
+                    })}
                 </View>
 
             </ScrollView>
