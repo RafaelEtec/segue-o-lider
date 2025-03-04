@@ -9,9 +9,11 @@ import {router} from "expo-router";
 const FriendCardOptions = (
     {
         friend: {
-            accountId2,
-            avatar,
-            username,
+            accountId2: {
+                $id,
+                avatar,
+                username,
+            },
             status
         }
     }) => {
@@ -19,14 +21,14 @@ const FriendCardOptions = (
     const [handleStatus, setHandleStatus] = useState(status)
 
     const submitAccept = async () => {
-        const result = await acceptFriendRequest(user.$id, accountId2);
+        const result = await acceptFriendRequest(user.$id, $id);
         if (!result) return showAlertDefault("Opa :/", "Falha na requisição")
         showAlertSuccess("Boa!", username + " foi adicionado!");
         setHandleStatus("accepted");
     }
 
     const submitDeny = async () => {
-        const result = await denyFriendRequest(user.$id, accountId2);
+        const result = await denyFriendRequest(user.$id, $id);
         if (!result) return showAlertDefault("Opa :/", "Falha na requisição")
         showAlertDefault("Vish", "Pedido de amizade recusado")
         setHandleStatus("denied");

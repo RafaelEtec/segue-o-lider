@@ -11,11 +11,10 @@ const GameCard = (
             username,
             avatar
         },
-        gameId,
-        dateCreated,
+        $id,
         $createdAt,
     } }) => {
-
+    const gameId = $id;
     return (
         <View className="flex-col items-center px-4 mb-14">
             <View className="flex-row gap-3 items-start">

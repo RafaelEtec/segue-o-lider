@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native'
+import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native'
 import React, {useState} from 'react'
 import {useGlobalContext} from "../../context/GlobalProvider";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -9,6 +9,7 @@ import {showMessage} from 'react-native-flash-message';
 import FriendCard from "../../components/FriendCard";
 import useAppwrite from "../../lib/useAppwrite";
 import FriendCardOptions from "../../components/FriendCardOptions";
+import icons from "../../constants/icons";
 
 const Friends = () => {
     const {user} = useGlobalContext();
@@ -96,7 +97,16 @@ const Friends = () => {
                 ) : (<></>)}
 
                 <View className="my-6">
-                    <Text className="text-gray-100 font-pmedium">Lista de Amigos</Text>
+                    <View className="flex-row w-full justify-between">
+                        <Text className="text-gray-100 font-pmedium">Lista de Amigos</Text>
+                        <TouchableOpacity onPress={onRefresh}>
+                            <Image
+                                source={icons.refresh}
+                                className="w-8 h-8"
+                                resizeMode="contain"
+                            />
+                        </TouchableOpacity>
+                    </View>
                     {friendsIds.map((friend, f_index) => {
                         return (
                             <FriendCardOptions key={friendsIds[f_index].$id} friend={friend} />

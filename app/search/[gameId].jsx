@@ -10,7 +10,6 @@ import Moment from "moment/moment";
 
 const Game = () => {
     const {gameId} = useLocalSearchParams();
-
     const { data: game } = useAppwrite(() => getGameById(gameId));
     const { data: participants, refetch} = useAppwrite(() => getParticipantsByGameId(gameId));
 

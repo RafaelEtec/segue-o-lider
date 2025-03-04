@@ -4,9 +4,7 @@ import React from 'react'
 const FriendCard = (
     {
         friend: {
-            accountId,
             avatar,
-            email,
             username,
         }
     }) => {

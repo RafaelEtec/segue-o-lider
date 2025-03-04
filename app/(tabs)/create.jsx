@@ -31,8 +31,8 @@ const Create = () => {
     for (let i = 0; i < friendsIds.length; i++) {
         if (friendsIds[i].status === "accepted") {
             showFriends.push(
-                <TouchableOpacity onPress={() => addParticipant(friendsIds[i])}>
-                    <FriendCardGame key={i} friend={friendsIds[i]} />
+                <TouchableOpacity key={i} onPress={() => addParticipant(friendsIds[i].accountId2)}>
+                    <FriendCardGame friend={friendsIds[i].accountId2} />
                 </TouchableOpacity>
             );
         }
@@ -59,7 +59,6 @@ const Create = () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
             allowsEditing: true,
-            aspect:[4, 3],
             quality: 1
         });
 
@@ -199,7 +198,7 @@ const Create = () => {
                                 {form.participants.map((participant, p_index) => {
                                     return (
                                         <TouchableOpacity key={p_index}>
-                                            <FriendCardAvatar key={p_index} friend={participant} />
+                                            <FriendCardAvatar friend={participant} />
                                         </TouchableOpacity>
                                     )
                                 })}
