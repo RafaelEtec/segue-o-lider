@@ -21,11 +21,10 @@ import {showMessage} from "react-native-flash-message";
 const Profile = () => {
     const {user, setUser, setIsLoggedIn} = useGlobalContext();
 
-    const {data: totalGames} = useAppwrite(() => getNumTotalGames(user.$id));
-    const {data: totalPoints} = useAppwrite(() => getNumTotalPoints(user.$id));
-    const {data: totalFriends} = useAppwrite(() => getNumTotalFriends(user.$id));
-
-    const {data: myGames, refetch} = useAppwrite(() => getMyGames(user.$id));
+    let {data: totalGames, refetch: refetchGames} = useAppwrite(() => getNumTotalGames(user.$id));
+    let {data: totalPoints, refetch: refetchPoints} = useAppwrite(() => getNumTotalPoints(user.$id));
+    let {data: totalFriends, refetch: refetchFriends} = useAppwrite(() => getNumTotalFriends(user.$id));
+    const {data: myGames, refetch: refetchMyGames} = useAppwrite(() => getMyGames(user.$id));
 
     const openPicker = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -38,7 +37,6 @@ const Profile = () => {
             await changeAvatar(result.assets[0]);
         }
     }
-
     const [uploading, setUploading] = useState(false);
     const changeAvatar = async (avatar) => {
         setUploading(true);
@@ -80,7 +78,10 @@ const Profile = () => {
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
-        await refetch();
+        await refetchGames();
+        await refetchPoints();
+        await refetchFriends();
+        await refetchMyGames();
         setRefreshing(false);
     }
 
