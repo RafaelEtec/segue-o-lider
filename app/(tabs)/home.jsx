@@ -11,22 +11,21 @@ import {getGamesById, getGamesIParticipate} from "../../lib/appwrite";
 
 const Home = () => {
     const {user} = useGlobalContext();
-
+    console.log("user: " + user);
     const {data: games, refetch: refetchGamesId}  = useAppwrite(() => getGamesIParticipate(user.$id));
-    const {data: myGames, refetch: refetchMyGames} = useAppwrite(() => getGamesById(games));
+    console.log("games: " + games);
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
         await refetchGamesId();
-        await refetchMyGames();
         setRefreshing(false);
     };
 
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
-                data={myGames}
+                data={games}
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
                     <GameCard key={item.$id} game={item}/>

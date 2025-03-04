@@ -76,7 +76,7 @@ const Profile = () => {
     };
 
     const [refreshing, setRefreshing] = useState(false);
-    const onRefresh = async () => {
+    const onRefresh = async () =>   {
         setRefreshing(true);
         await refetchGames();
         await refetchPoints();
