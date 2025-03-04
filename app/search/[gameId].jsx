@@ -17,7 +17,7 @@ const Game = () => {
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
-        refetch();
+        await refetch();
         setRefreshing(false);
     }
 
