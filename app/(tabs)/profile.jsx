@@ -33,7 +33,6 @@ const Profile = () => {
 
         if (!result.canceled) {
             await changeAvatar(result.assets[0]);
-
         }
     }
 
