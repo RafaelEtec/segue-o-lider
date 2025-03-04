@@ -196,16 +196,13 @@ const Create = () => {
                                 </TouchableOpacity>
                             </View>
                             <View className="w-full h-full flex-col">
-                                <FlashList
-                                    data={showParticipants}
-                                    renderItem={({item}) => (
+                                {form.participants.map((participant, p_index) => {
+                                    return (
                                         <TouchableOpacity>
-                                            <FriendCardAvatar key={item.$id} friend={item} />
+                                            <FriendCardAvatar key={p_index} friend={participant} />
                                         </TouchableOpacity>
-                                    )}
-                                    numColumns={1}
-                                    estimatedItemSize={50}
-                                />
+                                    )
+                                })}
                             </View>
                         </View>
                     </View>
