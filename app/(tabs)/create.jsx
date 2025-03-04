@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, TouchableOpacity, Image, FlatList, Alert} from 'react-native'
+import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native'
 import React, {useState} from 'react'
 import {SafeAreaView} from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
@@ -10,7 +10,6 @@ import useAppwrite from "../../lib/useAppwrite";
 import {createGame, getFriendsIds, insertParticipants} from "../../lib/appwrite";
 import FriendCardGame from "../../components/FriendCardGame";
 import FriendCardAvatar from "../../components/FriendCardAvatar";
-import * as DocumentPicker from 'expo-document-picker';
 import {FlashList} from "@shopify/flash-list";
 import {showMessage} from "react-native-flash-message";
 import {router} from "expo-router";

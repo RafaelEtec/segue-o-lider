@@ -1,12 +1,10 @@
-import {View, Text, FlatList, TouchableOpacity, ScrollView, Image, Alert} from 'react-native'
+import {View, Text, ScrollView} from 'react-native'
 import React, {useState} from 'react'
 import {useGlobalContext} from "../../context/GlobalProvider";
-import Moment from "moment";
 import {SafeAreaView} from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
-import icons from "../../constants/icons";
 import CustomButton from "../../components/CustomButton";
-import {findUserByEmail, findUserById, getFriendsIds, inviteFriendById} from "../../lib/appwrite";
+import {findUserByEmail, getFriendsIds, inviteFriendById} from "../../lib/appwrite";
 import {showMessage} from 'react-native-flash-message';
 import FriendCard from "../../components/FriendCard";
 import useAppwrite from "../../lib/useAppwrite";

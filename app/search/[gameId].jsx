@@ -1,6 +1,6 @@
-import {View, Text, FlatList, Image, RefreshControl} from 'react-native'
+import {View, Text, FlatList, Image, RefreshControl, TouchableOpacity} from 'react-native'
 import React, {useState} from 'react'
-import {useLocalSearchParams} from "expo-router";
+import {router, useLocalSearchParams} from "expo-router";
 import useAppwrite from "../../lib/useAppwrite";
 import {getGameById, getParticipantsByGameId} from "../../lib/appwrite";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -21,7 +21,7 @@ const Game = () => {
         setRefreshing(false);
     }
 
-    console.log(game.creator)
+    console.log(gameId)
 
     return (
         <SafeAreaView className="bg-black-300 h-full">
@@ -37,9 +37,15 @@ const Game = () => {
                     <View className="flex my-6 px-4 space-y-6">
                         <View className="flex justify-between items-space-between flex-row mb-6">
                             <View>
-                                <Text className="text-2xl font-psemibold text-accent-200">
-                                    {game.title}
-                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        router.push(`/logs/${gameId}`);
+                                    }}
+                                >
+                                    <Text className="text-2xl font-psemibold text-accent-200">
+                                        {game.title}
+                                    </Text>
+                                </TouchableOpacity>
                                 <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>
                                     {Moment(game.$createdAt).format('DD/MM/YYYY')}
                                 </Text>

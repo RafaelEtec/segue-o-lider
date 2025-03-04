@@ -2,17 +2,16 @@ import {View, Text, FlatList, Image, RefreshControl} from 'react-native'
 import React, {useState} from 'react'
 import {useLocalSearchParams} from "expo-router";
 import useAppwrite from "../../lib/useAppwrite";
-import {getGameById, getParticipantsByGameId} from "../../lib/appwrite";
+import {getGameById} from "../../lib/appwrite";
 import {SafeAreaView} from "react-native-safe-area-context";
 import GameCardById from "../../components/GameCardById";
 import images from '@/constants/images';
 import Moment from "moment/moment";
 
-const Game = () => {
+const GameLog = () => {
     const {gameId} = useLocalSearchParams();
 
     const { data: game } = useAppwrite(() => getGameById(gameId));
-    const { data: participants, refetch} = useAppwrite(() => getParticipantsByGameId(gameId));
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
@@ -21,12 +20,10 @@ const Game = () => {
         setRefreshing(false);
     }
 
-    console.log(game.creator)
-
     return (
         <SafeAreaView className="bg-black-300 h-full">
             <FlatList
-                data={participants}
+                data={null}
                 keyExtractor={(item) => item.$id}
                 renderItem={ ({ item }) => (
                     <GameCardById
@@ -52,11 +49,9 @@ const Game = () => {
                                 />
                             </View>
                         </View>
-                        <Image
-                            source={{uri: game.thumbnail}}
-                            className="w-full h-60 rounded-lg"
-                            resizeMode="cover"
-                        />
+                        <Text className="text-2xl font-psemibold text-accent-200">
+                            Logs de atividade
+                        </Text>
                     </View>
                 )}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -65,4 +60,4 @@ const Game = () => {
         </SafeAreaView>
     )
 }
-export default Game
+export default GameLog

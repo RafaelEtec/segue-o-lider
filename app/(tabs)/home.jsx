@@ -7,7 +7,7 @@ import EmptyState from "../../components/EmptyState";
 import {useGlobalContext} from "../../context/GlobalProvider";
 import GameCard from "../../components/GameCard";
 import useAppwrite from "../../lib/useAppwrite";
-import {getGamesById, getGamesIParticipate, getMyGames} from "../../lib/appwrite";
+import {getGamesById, getGamesIParticipate} from "../../lib/appwrite";
 
 const Home = () => {
     const {user} = useGlobalContext();

@@ -13,7 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import {showMessage} from "react-native-flash-message";
 
 const Profile = () => {
-    const {user} = useGlobalContext();
+    const {user, setUser, setIsLoggedIn} = useGlobalContext();
 
     const {data: friendsIds} = useAppwrite(() => getFriendsIds(user.$id));
     let friendsTotal = 0;
@@ -27,7 +27,6 @@ const Profile = () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaType: ['images'],
             allowsEditing: true,
-            aspect: [4, 3],
             quality: 1,
         });
 
@@ -77,7 +76,7 @@ const Profile = () => {
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
-        refetch();
+        await refetch();
         setRefreshing(false);
     }
 
