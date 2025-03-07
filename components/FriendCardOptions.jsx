@@ -5,6 +5,7 @@ import {useGlobalContext} from "../context/GlobalProvider";
 import {showMessage} from "react-native-flash-message";
 import {acceptFriendRequest, denyFriendRequest, inviteFriendById} from "../lib/appwrite";
 import {router} from "expo-router";
+import PopupFriendsOptions from "./PopupFriendsOptions";
 
 const FriendCardOptions = (
     {
@@ -99,15 +100,7 @@ const FriendCardOptions = (
                     </>
                 ) : handleStatus === "accepted" ?(
                     <>
-                        <TouchableOpacity
-
-                        >
-                            <Image
-                                source={icons.menu}
-                                className="w-8 h-8 mt-4"
-                                resizeMode="contain"
-                            />
-                        </TouchableOpacity>
+                        <PopupFriendsOptions userId={user.$id} friendId={$id} />
                     </>
                 ) : (
                     <></>

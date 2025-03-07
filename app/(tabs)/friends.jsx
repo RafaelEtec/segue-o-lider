@@ -102,7 +102,7 @@ const Friends = () => {
                         <TouchableOpacity onPress={onRefresh}>
                             <Image
                                 source={icons.refresh}
-                                className="w-8 h-8"
+                                className="w-8 h-8 mt-4"
                                 resizeMode="contain"
                             />
                         </TouchableOpacity>
