@@ -6,6 +6,7 @@ import {showMessage} from "react-native-flash-message";
 import {acceptFriendRequest, denyFriendRequest, inviteFriendById} from "../lib/appwrite";
 import {router} from "expo-router";
 import PopupFriendsOptions from "./PopupFriendsOptions";
+import {MenuProvider} from "react-native-popup-menu";
 
 const FriendCardOptions = (
     {
