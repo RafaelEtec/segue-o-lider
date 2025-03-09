@@ -2,6 +2,8 @@ import {View, Text, Image, TouchableOpacity} from 'react-native'
 import React, {useState} from 'react'
 import icons from "../constants/icons";
 import {addPoint, takePoint} from "../lib/appwrite";
+import PopupGameCardOptions from "./PopupGameCardOptions";
+import {MenuProvider} from "react-native-popup-menu";
 
 const GameCardById = (
     {
@@ -12,7 +14,8 @@ const GameCardById = (
             },
             points
         },
-        partId: id
+        partId: id,
+        place: isFirst
     }) => {
 
     const [point, setPoint] = useState(points)
@@ -27,7 +30,7 @@ const GameCardById = (
 
     return (
         <View className="flex-col items-center px-4 mb-5">
-            <View className="flex-row gap-3 items-start rounded-lg border-4 border-black-100 bg-black-250">
+            <View className={`flex-row gap-3 items-start rounded-lg border-4 ${isFirst === 0 && point !== 0 ? 'border-primary-300' : 'border-black-200'}  bg-black-250`}>
                 <View className="justify-center items-center flex-row flex-1">
                     <View className="w-[65px] h-[65px] justify-center items-center p-0.5">
                         <Image
@@ -37,13 +40,13 @@ const GameCardById = (
                         />
                     </View>
                     <View className="justify-center flex-1 ml-3 gap-y-1">
-                        <Text className="text-accent-200 font-psemibold text-sm" numberOfLines={1}>
+                        <Text className={`${isFirst === 0 && point !== 0 ? 'text-primary-300' : 'text-accent-200'} ${isFirst === 0 && point !== 0 ? 'text-lg' : 'text-sm'} font-psemibold`} numberOfLines={1}>
                             {username}
                         </Text>
                     </View>
                 </View>
                 <View className="pt-5 pr-5">
-                    <Text className="text-3xl text-accent-200">
+                    <Text className={`text-3xl ${isFirst === 0 && point !== 0 ? 'text-primary-300' : 'text-accent-200'}`}>
                         {point}
                     </Text>
                 </View>
@@ -54,6 +57,7 @@ const GameCardById = (
                         <Image
                             source={icons.add}
                             className="w-8 h-8"
+                            tintColor={`${isFirst === 0 && point !== 0 ? '#FFBA26' : '#fff'}`}
                             resizemode='contain'
                         />
                     </TouchableOpacity>
@@ -64,16 +68,13 @@ const GameCardById = (
                         <Image
                             source={icons.minus}
                             className="w-8 h-8"
+                            tintColor={`${isFirst === 0 && point !== 0 ? '#FFBA26' : '#fff'}`}
                             resizemode='contain'
                         />
                     </TouchableOpacity>
                 </View>
                 <View className="pt-5 pr-5">
-                    <Image
-                        source={icons.menu}
-                        className="w-2 h-8"
-                        resizemode='contain'
-                    />
+                    <PopupGameCardOptions partId={id}/>
                 </View>
             </View>
         </View>

@@ -8,6 +8,7 @@ import GameCardById from "../../components/GameCardById";
 import images from '@/constants/images';
 import Moment from "moment/moment";
 import CustomButton from "../../components/CustomButton";
+import {MenuProvider} from "react-native-popup-menu";
 
 const Game = () => {
     const {gameId} = useLocalSearchParams();
@@ -22,51 +23,53 @@ const Game = () => {
     }
 
     return (
-        <SafeAreaView className="bg-black-300 h-full">
-            <FlatList
-                data={participants}
-                keyExtractor={(item) => item.$id}
-                renderItem={ ({ item }) => (
-                    <GameCardById
-                        key={item.$id} participants={item} partId={item.$id}
-                    />
-                )}
-                ListHeaderComponent={() => (
-                    <View className="flex my-6 px-4 space-y-6">
-                        <View className="flex justify-between items-space-between flex-row mb-6">
-                            <View>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        router.push(`/logs/${gameId}`);
-                                    }}
-                                >
-                                    <Text className="text-2xl font-psemibold text-accent-200">
-                                        {game.title}
-                                    </Text>
-                                </TouchableOpacity>
-                                <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>
-                                    {Moment(game.$createdAt).format('DD/MM/YYYY')}
-                                </Text>
-                            </View>
-                            <View className="mt-1.5">
-                                <Image
-                                    source={images.crown}
-                                    className="w-11 h-12"
-                                    resizemode='contain'
-                                />
-                            </View>
-                        </View>
-                        <Image
-                            source={{uri: game.thumbnail}}
-                            className="w-full h-60 rounded-lg"
-                            resizeMode="cover"
+        <MenuProvider>
+            <SafeAreaView className="bg-black-300 h-full">
+                <FlatList
+                    data={participants}
+                    keyExtractor={(item) => item.$id}
+                    renderItem={ ({ item, index }) => (
+                        <GameCardById
+                            key={item.$id} place={index} participants={item} partId={item.$id}
                         />
-                    </View>
-                )}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                }
-            />
-        </SafeAreaView>
+                    )}
+                    ListHeaderComponent={() => (
+                        <View className="flex my-6 px-4 space-y-6">
+                            <View className="flex justify-between items-space-between flex-row mb-6">
+                                <View>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            router.push(`/logs/${gameId}`);
+                                        }}
+                                    >
+                                        <Text className="text-2xl font-psemibold text-accent-200">
+                                            {game.title}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>
+                                        {Moment(game.$createdAt).format('DD/MM/YYYY')}
+                                    </Text>
+                                </View>
+                                <View className="mt-1.5">
+                                    <Image
+                                        source={images.crown}
+                                        className="w-11 h-12"
+                                        resizemode='contain'
+                                    />
+                                </View>
+                            </View>
+                            <Image
+                                source={{uri: game.thumbnail}}
+                                className="w-full h-60 rounded-lg"
+                                resizeMode="cover"
+                            />
+                        </View>
+                    )}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }
+                />
+            </SafeAreaView>
+        </MenuProvider>
     )
 }
 export default Game

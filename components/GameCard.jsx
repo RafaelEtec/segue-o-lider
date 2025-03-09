@@ -2,6 +2,7 @@ import {View, Text, Image, TouchableOpacity} from 'react-native'
 import React, {useState} from 'react'
 import Moment from 'moment';
 import {router, usePathname} from 'expo-router';
+import {MenuProvider} from "react-native-popup-menu";
 
 const GameCard = (
     {game: {
