@@ -45,7 +45,10 @@ const Create = () => {
         form.participants.push(participant);
         setShowParticipants(participant);
     }
-
+    const removeParticipant = async (p_index) => {
+        form.participants.splice(p_index, 1);
+        setShowParticipants(form.participants);
+    }
     const alreadyParticipant = (participant) => {
         for (let i = 0; i < form.participants.length; i++) {
             if (form.participants[i] === participant) {
@@ -197,7 +200,7 @@ const Create = () => {
                             <View className="w-full h-full flex-col">
                                 {form.participants.map((participant, p_index) => {
                                     return (
-                                        <TouchableOpacity key={p_index}>
+                                        <TouchableOpacity key={p_index} onPress={() => removeParticipant(p_index)}>
                                             <FriendCardAvatar friend={participant} />
                                         </TouchableOpacity>
                                     )
