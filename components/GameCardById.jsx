@@ -4,7 +4,6 @@ import icons from "../constants/icons";
 import {addGameLog, addPoint, takePoint} from "../lib/appwrite";
 import PopupGameCardOptions from "./PopupGameCardOptions";
 import {useGlobalContext} from "../context/GlobalProvider";
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 const GameCardById = (
     {

@@ -7,7 +7,6 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import GameCardById from "../../components/GameCardById";
 import images from '@/constants/images';
 import Moment from "moment/moment";
-import CustomButton from "../../components/CustomButton";
 import {MenuProvider} from "react-native-popup-menu";
 
 const Game = () => {
