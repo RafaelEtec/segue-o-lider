@@ -1,9 +1,10 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native'
 import React, {useState} from 'react'
 import icons from "../constants/icons";
-import {addPoint, takePoint} from "../lib/appwrite";
+import {addGameLog, addPoint, takePoint} from "../lib/appwrite";
 import PopupGameCardOptions from "./PopupGameCardOptions";
-import {MenuProvider} from "react-native-popup-menu";
+import {useGlobalContext} from "../context/GlobalProvider";
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 const GameCardById = (
     {
@@ -15,16 +16,21 @@ const GameCardById = (
             points
         },
         partId: id,
-        place: isFirst
+        place: isFirst,
+        gameId
     }) => {
+
+    const {user} = useGlobalContext();
 
     const [point, setPoint] = useState(points)
     const add = async () => {
         await addPoint(id, point);
+        await addGameLog(gameId, user.$id, "+"+username, point + " => " + (point+1));
         setPoint(point+1);
     }
     const take = async () => {
         await takePoint(id, point);
+        await addGameLog(gameId, user.$id, "-"+username, point + " => " + (point-1));
         setPoint(point-1);
     }
 
