@@ -30,7 +30,7 @@ const Game = () => {
                     keyExtractor={(item) => item.$id}
                     renderItem={ ({ item, index }) => (
                         <GameCardById
-                            key={item.$id} place={index} participants={item} partId={item.$id}
+                            key={item.$id} place={index} participants={item} partId={item.$id} gameId={gameId}
                         />
                     )}
                     ListHeaderComponent={() => (

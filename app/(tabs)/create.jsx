@@ -7,10 +7,9 @@ import Moment from "moment/moment";
 import icons from "../../constants/icons";
 import CustomButton from "../../components/CustomButton";
 import useAppwrite from "../../lib/useAppwrite";
-import {createGame, getFriendsIds, insertParticipants} from "../../lib/appwrite";
+import {addGameLog, createGame, getFriendsIds, insertParticipants} from "../../lib/appwrite";
 import FriendCardGame from "../../components/FriendCardGame";
 import FriendCardAvatar from "../../components/FriendCardAvatar";
-import {FlashList} from "@shopify/flash-list";
 import {showMessage} from "react-native-flash-message";
 import {router} from "expo-router";
 import * as ImagePicker from "expo-image-picker";
@@ -45,10 +44,6 @@ const Create = () => {
         form.participants.push(participant);
         setShowParticipants(participant);
     }
-    const removeParticipant = async (p_index) => {
-        form.participants.splice(p_index, 1);
-        setShowParticipants(form.participants);
-    }
     const alreadyParticipant = (participant) => {
         for (let i = 0; i < form.participants.length; i++) {
             if (form.participants[i] === participant) {
@@ -56,6 +51,14 @@ const Create = () => {
             }
         }
         return false;
+    }
+    const removeParticipant = async (p_index) => {
+        form.participants.splice(p_index, 1);
+        setShowParticipants(form.participants);
+    }
+    const clearParticipants = async () => {
+        form.participants = [];
+        setShowParticipants([]);
     }
 
     const openPicker = async () => {
@@ -84,6 +87,7 @@ const Create = () => {
             const game = await createGame({...form});
 
             await insertParticipants(game, user, form.participants);
+            await addGameLog(game.$id, user.$id, "createGame", "")
 
             showAlertSuccess("Boa!", "Jogo criado com sucesso")
             router.replace('/home')
@@ -108,11 +112,6 @@ const Create = () => {
         await refetch();
         setShowParticipants(form.participants);
         setRefreshing(false);
-    }
-
-    const clearParticipants = async () => {
-        form.participants = [];
-        setShowParticipants([]);
     }
 
     const showAlertDefault = (title, description) => {
