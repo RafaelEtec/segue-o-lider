@@ -108,7 +108,6 @@ const TabsLayout = () => {
                 />
             </Tabs>
             <Loader isLoading={loading}/>
-            <FlashMessage position="top" />
         </>
     )
 }

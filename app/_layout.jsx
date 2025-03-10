@@ -4,6 +4,8 @@ import {useFonts} from "expo-font";
 import "../global.css"
 import * as NavigationBar from "expo-navigation-bar";
 import GlobalProvider from '../context/GlobalProvider'
+import {MenuProvider} from "react-native-popup-menu";
+import FlashMessage from "react-native-flash-message";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,13 +44,16 @@ const RootLayout = () => {
 
     return (
         <GlobalProvider>
-            <Stack>
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="search/[gameId]" options={{ headerShown: false }} />
-                <Stack.Screen name="logs/[gameId]" options={{ headerShown: false }} />
-            </Stack>
+            <MenuProvider>
+                <Stack>
+                    <Stack.Screen name="index" options={{ headerShown: false }} />
+                    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="search/[gameId]" options={{ headerShown: false }} />
+                    <Stack.Screen name="logs/[gameId]" options={{ headerShown: false }} />
+                </Stack>
+            </MenuProvider>
+            <FlashMessage position="top" />
         </GlobalProvider>
     )
 }

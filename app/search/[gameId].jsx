@@ -22,53 +22,51 @@ const Game = () => {
     }
 
     return (
-        <MenuProvider>
-            <SafeAreaView className="bg-black-300 h-full">
-                <FlatList
-                    data={participants}
-                    keyExtractor={(item) => item.$id}
-                    renderItem={ ({ item, index }) => (
-                        <GameCardById
-                            key={item.$id} place={index} participants={item} partId={item.$id} gameId={gameId}
-                        />
-                    )}
-                    ListHeaderComponent={() => (
-                        <View className="flex my-6 px-4 space-y-6">
-                            <View className="flex justify-between items-space-between flex-row mb-6">
-                                <View>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            router.push(`/logs/${gameId}`);
-                                        }}
-                                    >
-                                        <Text className="text-2xl font-psemibold text-accent-200">
-                                            {game.title}
-                                        </Text>
-                                    </TouchableOpacity>
-                                    <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>
-                                        {Moment(game.$createdAt).format('DD/MM/YYYY')}
+        <SafeAreaView className="bg-black-300 h-full">
+            <FlatList
+                data={participants}
+                keyExtractor={(item) => item.$id}
+                renderItem={ ({ item, index }) => (
+                    <GameCardById
+                        key={item.$id} place={index} participants={item} partId={item.$id} gameId={gameId} creator={game.creator.$id}
+                    />
+                )}
+                ListHeaderComponent={() => (
+                    <View className="flex my-6 px-4 space-y-6">
+                        <View className="flex justify-between items-space-between flex-row mb-6">
+                            <View>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        router.push(`/logs/${gameId}`);
+                                    }}
+                                >
+                                    <Text className="text-2xl font-psemibold text-accent-200">
+                                        {game.title}
                                     </Text>
-                                </View>
-                                <View className="mt-1.5">
-                                    <Image
-                                        source={images.crown}
-                                        className="w-11 h-12"
-                                        resizemode='contain'
-                                    />
-                                </View>
+                                </TouchableOpacity>
+                                <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>
+                                    {Moment(game.$createdAt).format('DD/MM/YYYY')}
+                                </Text>
                             </View>
-                            <Image
-                                source={{uri: game.thumbnail}}
-                                className="w-full h-60 rounded-lg"
-                                resizeMode="cover"
-                            />
+                            <View className="mt-1.5">
+                                <Image
+                                    source={images.crown}
+                                    className="w-11 h-12"
+                                    resizemode='contain'
+                                />
+                            </View>
                         </View>
-                    )}
-                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                    }
-                />
-            </SafeAreaView>
-        </MenuProvider>
+                        <Image
+                            source={{uri: game.thumbnail}}
+                            className="w-full h-60 rounded-lg"
+                            resizeMode="cover"
+                        />
+                    </View>
+                )}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
+            />
+        </SafeAreaView>
     )
 }
 export default Game

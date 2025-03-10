@@ -4,7 +4,7 @@ import {
     MenuOption,
     MenuTrigger
 } from "react-native-popup-menu";
-import {Image, Text} from "react-native";
+import {Alert, Image, Text} from "react-native";
 import icons from "../constants/icons";
 import React from "react";
 import {setVisibilityAsync} from "expo-navigation-bar";
@@ -37,6 +37,19 @@ const PopupFriendsOptions = (
             type: "success",
         })
     }
+    const showAlertConfirmation = (title, description) => {
+        Alert.alert(title, description, [
+            {
+                text: "Sim",
+                onPress: unFriend
+            },
+            {
+                text: "Cancelar",
+                style: "cancel",
+                isPreferred: true
+            },
+        ]);
+    }
 
     return (
         <Menu onBackdropPress={() => setVisibilityAsync("hidden")}>
@@ -47,7 +60,7 @@ const PopupFriendsOptions = (
             </MenuTrigger>
             <MenuOptions>
                 <MenuOption
-                    onSelect={unFriend}
+                    onSelect={() => showAlertConfirmation("Tem certeza?", "Desfazer amizade")}
                     text="Desfazer amizade"
                 >
                 </MenuOption>

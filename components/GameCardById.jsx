@@ -24,13 +24,13 @@ const GameCardById = (
     const [point, setPoint] = useState(points)
     const add = async () => {
         await addPoint(id, point);
-        await addGameLog(gameId, user.$id, "+"+username, point + " => " + (point+1));
         setPoint(point+1);
+        await addGameLog(gameId, user.$id, "+"+username, point + " => " + (point+1));
     }
     const take = async () => {
         await takePoint(id, point);
-        await addGameLog(gameId, user.$id, "-"+username, point + " => " + (point-1));
         setPoint(point-1);
+        await addGameLog(gameId, user.$id, "-"+username, point + " => " + (point-1));
     }
 
     return (

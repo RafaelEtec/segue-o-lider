@@ -4,12 +4,12 @@ import {
     MenuOption,
     MenuTrigger
 } from "react-native-popup-menu";
-import {Image, Text} from "react-native";
+import {Alert, Image, Text} from "react-native";
 import icons from "../constants/icons";
 import React from "react";
 import {setVisibilityAsync} from "expo-navigation-bar";
 import {showMessage} from "react-native-flash-message";
-import {removeParticipantFromGame} from "../lib/appwrite";
+import {addGameLog, removeParticipantFromGame} from "../lib/appwrite";
 
 const PopupGameCardOptions = (
     {
@@ -18,7 +18,7 @@ const PopupGameCardOptions = (
 
     const removeParticipant = async() => {
         const result = await removeParticipantFromGame(id);
-        if (!result) return showAlertDefault("Opa :/", "Não foi possível remover o participante");
+        if (!result) return showAlertDefault("Opa :/", "Não foi possível remover o participante")
         showAlertSuccess("Boa", "Participante removido");
     }
 
@@ -36,6 +36,19 @@ const PopupGameCardOptions = (
             type: "success",
         })
     }
+    const showAlertConfirmation = (title, description) => {
+        Alert.alert(title, description, [
+            {
+                text: "Sim",
+                onPress: removeParticipant
+            },
+            {
+                text: "Cancelar",
+                style: "cancel",
+                isPreferred: true
+            },
+        ]);
+    }
 
     return (
         <Menu onBackdropPress={() => setVisibilityAsync("hidden")}>
@@ -46,7 +59,7 @@ const PopupGameCardOptions = (
             </MenuTrigger>
             <MenuOptions>
                 <MenuOption
-                    onSelect={removeParticipant}
+                    onSelect={() => showAlertConfirmation("Tem certeza?", "Remover participante")}
                     text="Remover participante"
                 >
                 </MenuOption>

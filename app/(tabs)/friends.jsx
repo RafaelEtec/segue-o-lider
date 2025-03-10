@@ -67,60 +67,58 @@ const Friends = () => {
     }
 
     return (
-        <MenuProvider>
-            <SafeAreaView className="bg-black-300 h-full">
-                <ScrollView className="px-4 my-6">
-                    <Text className="text-2xl text-accent-200 font-psemibold">
-                        Adicione Amigos
-                    </Text>
+        <SafeAreaView className="bg-black-300 h-full">
+            <ScrollView className="px-4 my-6">
+                <Text className="text-2xl text-accent-200 font-psemibold">
+                    Adicione Amigos
+                </Text>
 
-                    <FormField
-                        title="Convide-o pelo seu E-mail"
-                        value={formNewFriend.email}
-                        placeholder="fulano@gmail.com"
-                        handleChangeText={(e) => setFormNewFriend({...formNewFriend, email: e})}
-                        otherStyles="mt-10 mb-4"
-                        onEndEditing={findUser}
+                <FormField
+                    title="Convide-o pelo seu E-mail"
+                    value={formNewFriend.email}
+                    placeholder="fulano@gmail.com"
+                    handleChangeText={(e) => setFormNewFriend({...formNewFriend, email: e})}
+                    otherStyles="mt-10 mb-4"
+                    onEndEditing={findUser}
+                />
+
+                <View className="w-full h-20 bg-black-250 rounded-2xl items-center justify-center">
+                {friend !== null ? (
+                    <FriendCard friend={friend} />
+                ) : (
+                    <Text className="text-gray-100 font-pmedium">Encontre um amigo</Text>
+                )}
+                </View>
+                {friend !== null ? (
+                    <CustomButton
+                        title="Convidar"
+                        handlePress={submitFriendRequest}
+                        containerStyles="mt-2"
                     />
+                ) : (<></>)}
 
-                    <View className="w-full h-20 bg-black-250 rounded-2xl items-center justify-center">
-                    {friend !== null ? (
-                        <FriendCard friend={friend} />
-                    ) : (
-                        <Text className="text-gray-100 font-pmedium">Encontre um amigo</Text>
-                    )}
-                    </View>
-                    {friend !== null ? (
-                        <CustomButton
-                            title="Convidar"
-                            handlePress={submitFriendRequest}
-                            containerStyles="mt-2"
-                        />
-                    ) : (<></>)}
-
-                    <View className="my-6">
-                        <View className="flex-row w-full justify-between">
-                            <Text className="text-gray-100 font-pmedium">Lista de Amigos</Text>
-                            <TouchableOpacity onPress={onRefresh}>
-                                <Image
-                                    source={icons.refresh}
-                                    className="w-8 h-8 mt-4"
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                        </View>
-
-                            {friendsIds.map((friend, f_index) => {
-                                return (
-                                    <FriendCardOptions key={friendsIds[f_index].$id} friend={friend} />
-                                )
-                            })}
-
+                <View className="my-6">
+                    <View className="flex-row w-full justify-between">
+                        <Text className="text-gray-100 font-pmedium">Lista de Amigos</Text>
+                        <TouchableOpacity onPress={onRefresh}>
+                            <Image
+                                source={icons.refresh}
+                                className="w-8 h-8"
+                                resizeMode="contain"
+                            />
+                        </TouchableOpacity>
                     </View>
 
-                </ScrollView>
-            </SafeAreaView>
-        </MenuProvider>
+                        {friendsIds.map((friend, f_index) => {
+                            return (
+                                <FriendCardOptions key={friendsIds[f_index].$id} friend={friend} />
+                            )
+                        })}
+
+                </View>
+
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 export default Friends
