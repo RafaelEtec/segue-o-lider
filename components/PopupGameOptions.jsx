@@ -6,21 +6,23 @@ import {
 } from "react-native-popup-menu";
 import {Alert, Image, Text} from "react-native";
 import icons from "../constants/icons";
-import React from "react";
+import React, {useState} from "react";
 import {setVisibilityAsync} from "expo-navigation-bar";
 import {showMessage} from "react-native-flash-message";
-import {unFriendById} from "../lib/appwrite";
+import {renderers} from "react-native-popup-menu";
+import {router} from "expo-router";
+import {deleteGameById} from "../lib/appwrite";
+const {SlideInMenu} = renderers;
 
-const PopupFriendsOptions = (
+const PopupGameOptions = (
     {
-        userId: userId,
-        friendId: friendId
+        gameId
     }) => {
 
-    const unFriend = async () => {
-        const result = await unFriendById(userId, friendId);
-        if (!result) return showAlertDefault("Opa :/", "Não foi possível desfazer a amizade");
-        showAlertSuccess("Boa", "Amizade desfeita")
+    const deleteGame = async () => {
+        console.log("Deleting...");
+        await deleteGameById(gameId);
+        router.replace("/home");
     }
 
     const showAlertDefault = (title, description) => {
@@ -41,7 +43,7 @@ const PopupFriendsOptions = (
         Alert.alert(title, description, [
             {
                 text: "Sim",
-                onPress: unFriend
+                onPress: deleteGame
             },
             {
                 text: "Cancelar",
@@ -52,21 +54,25 @@ const PopupFriendsOptions = (
     }
 
     return (
-        <Menu onBackdropPress={() => setVisibilityAsync("hidden")}>
+        <Menu renderer={SlideInMenu} onBackdropPress={() => setVisibilityAsync("hidden")}>
             <MenuTrigger>
                 <Image source={icons.menu}
-                       className="w-8 h-8 mt-4"
+                       className="w-8 h-8"
                 />
             </MenuTrigger>
-            <MenuOptions>
+            <MenuOptions style={{padding: 10, alignItems: "center"}} optionsContainerStyle={{backgroundColor: "#cdcde0"}}>
                 <MenuOption
-                    onSelect={() => showAlertConfirmation("Tem certeza?", "Desfazer amizade")}
-                    text="Desfazer amizade"
+                    style={{fontSize: 20}}
+                    onSelect={() => showAlertConfirmation("Tem certeza?", "Excluir jogo")}
                 >
+                    <Text className="font-psemibold">Excluir jogo</Text>
+                </MenuOption>
+                <MenuOption>
+                    <Text className="font-psemibold">Adicionar Jogador</Text>
                 </MenuOption>
             </MenuOptions>
         </Menu>
     );
 };
 
-export default PopupFriendsOptions;
+export default PopupGameOptions;
