@@ -3,7 +3,6 @@ import React from 'react';
 import {Tabs, Redirect} from 'expo-router';
 import icons from '../../constants/icons';
 import {useGlobalContext} from "../../context/GlobalProvider";
-import FlashMessage from "react-native-flash-message";
 import Loader from "../../components/Loader";
 
 const TabIcon = ({icon, color, focused}) => {
@@ -107,7 +106,7 @@ const TabsLayout = () => {
                     }}
                 />
             </Tabs>
-            <Loader isLoading={loading}/>
+            <Loader isLoading={loading} />
         </>
     )
 }

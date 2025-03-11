@@ -3,9 +3,11 @@ import {SplashScreen, Stack} from "expo-router";
 import {useFonts} from "expo-font";
 import "../global.css"
 import * as NavigationBar from "expo-navigation-bar";
-import GlobalProvider from '../context/GlobalProvider'
+import GlobalProvider, {useGlobalContext} from '../context/GlobalProvider'
 import {MenuProvider} from "react-native-popup-menu";
 import FlashMessage from "react-native-flash-message";
+import {ActivityIndicator} from "react-native";
+import Loader from "../components/Loader";
 
 SplashScreen.preventAutoHideAsync();
 

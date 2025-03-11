@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Image, RefreshControl, TouchableOpacity} from 'react-native'
+import {View, Text, FlatList, Image, RefreshControl, TouchableOpacity, ActivityIndicator} from 'react-native'
 import React, {useState} from 'react'
 import {router, useLocalSearchParams} from "expo-router";
 import useAppwrite from "../../lib/useAppwrite";

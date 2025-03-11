@@ -13,25 +13,22 @@ import {renderers} from "react-native-popup-menu";
 import {router} from "expo-router";
 import {deleteGameById} from "../lib/appwrite";
 const {SlideInMenu} = renderers;
+import {useGlobalContext} from "../context/GlobalProvider";
 
 const PopupGameOptions = (
     {
         gameId
     }) => {
 
+    const {setIsLoading} = useGlobalContext();
     const deleteGame = async () => {
-        console.log("Deleting...");
+        setIsLoading(true);
         await deleteGameById(gameId);
+        setIsLoading(false);
+        showAlertSuccess("Ok né :/", "Jogo excluído com sucesso")
         router.replace("/home");
     }
 
-    const showAlertDefault = (title, description) => {
-        showMessage({
-            message: title,
-            description: description,
-            type: "default",
-        })
-    }
     const showAlertSuccess = (title, description) => {
         showMessage({
             message: title,
@@ -43,7 +40,7 @@ const PopupGameOptions = (
         Alert.alert(title, description, [
             {
                 text: "Sim",
-                onPress: deleteGame
+                onPress: () => deleteGame(),
             },
             {
                 text: "Cancelar",
@@ -63,7 +60,7 @@ const PopupGameOptions = (
             <MenuOptions style={{padding: 10, alignItems: "center"}} optionsContainerStyle={{backgroundColor: "#cdcde0"}}>
                 <MenuOption
                     style={{fontSize: 20}}
-                    onSelect={() => showAlertConfirmation("Tem certeza?", "Excluir jogo")}
+                    onSelect={() => showAlertConfirmation("Tem certeza?", "Todas as informações serão perdidas")}
                 >
                     <Text className="font-psemibold">Excluir jogo</Text>
                 </MenuOption>
