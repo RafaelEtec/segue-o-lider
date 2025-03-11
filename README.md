@@ -17,8 +17,8 @@ Sua principal função é armazenar a pontuação dos jogadores, dado certo jogo
 - [React Native](https://reactnative.dev/)
 - [Expo](https://expo.dev/)
 - [Nativewind](https://www.nativewind.dev/)
-- [Flash Message](https://www.npmjs.com/package/react-flash-message)
 - [Appwrite](https://appwrite.io/)
+- Além de mais alguns pacotes que aprimoram o visual e o desempenho da aplicação
 
 ## 🔋 Features</a>
 
@@ -44,6 +44,6 @@ E muito mais, incluindo arquitetura de código e reutilização.
 
 ## 📌 To-do
 - Refatoração do código
-- Log de atividades
+- ✅ Log de atividades
 - Upload à Google Play Store
 - Upload à Apple App Store
