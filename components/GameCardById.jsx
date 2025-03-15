@@ -16,7 +16,8 @@ const GameCardById = (
         },
         partId: id,
         place: isFirst,
-        gameId
+        gameId,
+        creator
     }) => {
 
     const {user} = useGlobalContext();

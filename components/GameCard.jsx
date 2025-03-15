@@ -39,7 +39,7 @@ const GameCard = (
             </View>
             <TouchableOpacity
                 onPress={() => {
-                    router.push(`/search/${gameId}`);
+                    router.push(`search/${gameId}`);
                 }}
                 className="w-full h-60 rounded-xl mt-3 relative justify-center items-center">
                 <Image

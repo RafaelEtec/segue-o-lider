@@ -17,7 +17,7 @@ const PopupFriendsOptions = (
         friendId: friendId
     }) => {
 
-    const unFriend = async() => {
+    const unFriend = async () => {
         const result = await unFriendById(userId, friendId);
         if (!result) return showAlertDefault("Opa :/", "Não foi possível desfazer a amizade");
         showAlertSuccess("Boa", "Amizade desfeita")

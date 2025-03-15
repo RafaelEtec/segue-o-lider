@@ -1,18 +1,21 @@
-import {View, Text, FlatList, Image, RefreshControl, TouchableOpacity} from 'react-native'
+import {View, Text, FlatList, Image, RefreshControl, TouchableOpacity, ActivityIndicator} from 'react-native'
 import React, {useState} from 'react'
 import {router, useLocalSearchParams} from "expo-router";
 import useAppwrite from "../../lib/useAppwrite";
-import {getGameById, getParticipantsByGameId} from "../../lib/appwrite";
+import {getGameById, getParticipantsByGameId, isCreator} from "../../lib/appwrite";
 import {SafeAreaView} from "react-native-safe-area-context";
 import GameCardById from "../../components/GameCardById";
 import images from '@/constants/images';
 import Moment from "moment/moment";
-import {MenuProvider} from "react-native-popup-menu";
+import PopupGameOptions from "../../components/PopupGameOptions";
+import {useGlobalContext} from "../../context/GlobalProvider";
 
 const Game = () => {
+    const {user, isLoading, setIsLoading} = useGlobalContext();
     const {gameId} = useLocalSearchParams();
-    const { data: game } = useAppwrite(() => getGameById(gameId));
-    const { data: participants, refetch} = useAppwrite(() => getParticipantsByGameId(gameId));
+    const {data: game} = useAppwrite(() => getGameById(gameId));
+    const {data: creator} = useAppwrite(() => isCreator(user?.$id, gameId));
+    const {data: participants, refetch} = useAppwrite(() => getParticipantsByGameId(gameId));
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
@@ -26,9 +29,10 @@ const Game = () => {
             <FlatList
                 data={participants}
                 keyExtractor={(item) => item.$id}
-                renderItem={ ({ item, index }) => (
+                renderItem={({item, index}) => (
                     <GameCardById
-                        key={item.$id} place={index} participants={item} partId={item.$id} gameId={gameId} creator={game.creator.$id}
+                        key={item.$id} place={index} participants={item} partId={item.$id} gameId={gameId}
+                        creator={game?.creator?.$id}
                     />
                 )}
                 ListHeaderComponent={() => (
@@ -45,15 +49,19 @@ const Game = () => {
                                     </Text>
                                 </TouchableOpacity>
                                 <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>
-                                    {Moment(game.$createdAt).format('DD/MM/YYYY')}
+                                    {Moment(game.$createdAt).startOf('hour').fromNow()}
                                 </Text>
                             </View>
                             <View className="mt-1.5">
-                                <Image
-                                    source={images.crown}
-                                    className="w-11 h-12"
-                                    resizemode='contain'
-                                />
+                                { creator ? (
+                                    <PopupGameOptions gameId={gameId} />
+                                ) : (
+                                    <Image
+                                        source={images.crown}
+                                        className="w-11 h-12"
+                                        resizemode='contain'
+                                    />
+                                )}
                             </View>
                         </View>
                         <Image
@@ -63,10 +71,10 @@ const Game = () => {
                         />
                     </View>
                 )}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
                 }
             />
         </SafeAreaView>
-    )
+    );
 }
 export default Game
