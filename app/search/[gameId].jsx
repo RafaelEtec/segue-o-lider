@@ -49,7 +49,7 @@ const Game = () => {
                                     </Text>
                                 </TouchableOpacity>
                                 <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>
-                                    {Moment(game.$createdAt).format('DD/MM/YYYY')}
+                                    {Moment(game.$createdAt).startOf('hour').fromNow()}
                                 </Text>
                             </View>
                             <View className="mt-1.5">
